@@ -3,10 +3,86 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel = "stylesheet" href="style.css">
+  <link rel = "stylesheet" href="/assets/style/style.css">
   <title>Formiguerra</title>
 </head>
 <body>
-  
+  <div class="campo">  
+
+    <div class="player__area">
+      <div class="player" id="player1">
+        <h1>Jogador 1(Você)</h1>
+        <div class="player__info" id="p1-status">
+          <h2>Status:</h2>
+          <p>Vida: <span id="p1-vida">100/200</span></p>
+          <p>Muro: <span id="p1-muro">10/100</span></p>
+        </div>
+        <div class="player__info" id="p1-recursos">
+          <h2>Recursos:</h2>
+          <p>Tijolos: <span id="p1-tijolos">0</span></p>
+          <p>Guerreiros: <span id="p1-guerreiros">0</span></p>
+          <p>Essência: <span id="p1-essencia">0</span></p>
+        </div>
+
+        <div class="player__info__fornecedores" id="p1-fornecedores">
+          <h2>Fornecedores:</h2>
+          <p>Construtores: <span id="p1-construtores">1</span></p>
+          <p>Treinadores: <span id="p1-treinadores">1</span></p>
+          <p>Magos: <span id="p1-magos">1</span></p>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="campo__jogo">
+      <div class="campo__jogo__jogador" id="p2-cartas">
+        <div class="campo__jogo__jogador__carta">
+          <p>Cartas do Bot</p>
+        </div>
+      </div>
+
+        <div class="campo__jogo__tabuleiro">
+          <p>Tabuleiro</p>
+            <div class="campo__jogo__tabuleiro__carta">
+              <p>Carta jogada!</p>
+            </div>
+        </div>
+
+      <div class="campo__jogo__jogador" id="p1-cartas">
+        <p>Suas Cartas Aqui</p>
+      </div>
+    </div>
+
+
+
+    <div class="player__area">
+      <div class="player" id="player2">
+        <h1>Jogador 2(Bot)</h1>
+        <div class="player__info" id="p2-status">
+          <h2>Status:</h2>
+          <p>Vida: <span id="p2-vida">100/200</span></p>
+          <p>Muro: <span id="p2-muro">10/100</span></p>
+        </div>
+
+        <div class="player__info" id="p2-recursos">
+          <h2>Recursos:</h2>
+          <p>Tijolos: <span id="p2-tijolos">0</span></p>
+          <p>Guerreiros: <span id="p2-guerreiros">0</span></p>
+          <p>Essência: <span id="p2-essencia">0</span></p>
+        </div>
+
+        <div class="player__info__fornecedores" id="p2-fornecedores">
+          <h2>Fornecedores:</h2>
+          <p>Construtores: <span id="p2-construtores">1</span></p>
+          <p>Treinadores: <span id="p2-treinadores">1</span></p>
+          <p>Magos: <span id="p2-magos">1</span></p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  <script src="/assets/js/app.js"></script>
 </body>
 </html>

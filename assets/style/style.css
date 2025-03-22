@@ -1,0 +1,58 @@
+body{
+    font-family: Arial, sans-serif;
+    background-color: #f4f4dc;
+    padding: 10px;
+    margin: 0;
+    height: 100vh;
+}
+
+.campo{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.player__area{
+    display: flex;
+    border: 2px dashed #999;
+}
+
+.player{
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #fffaf0;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  }
+
+  .player__info{
+
+  }
+
+
+  .campo__jogo{
+    display: flex;
+    flex-direction: column;
+    background-color: #fffaf0;
+    align-items: center;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+    padding: 10px;
+    min-height: 300px;
+  }
+
+  .campo__jogo__jogador{
+    display: flex;
+    height: 25%;
+    gap: 10px;
+    padding: 10px;
+  }
+
+
+  .campo__jogo__tabuleiro{
+    display: flex;
+    height: 50%;
+  }
