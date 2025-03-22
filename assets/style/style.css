@@ -70,11 +70,20 @@ body{
     cursor: pointer;
   }
 
+  .campo__jogo__jogador__carta.tabuleiro{
+    width: 40%;
+  }
+
   .carta{
     display: flex;
     flex-direction: column;
     width: 100%;
     height: 100%;
+  }
+
+  .carta img{
+    width: 100%;
+    height: auto;
   }
 
 

@@ -1,6 +1,40 @@
 // ARRAY DE CARTAS
 const cartas = [
-
+  {
+    nome: 'Ataque Direto',
+    descricao: 'Cause 3 de dano ao castelo inimigo',
+    imagem: '/assets/img/ataquedireto/ataquedireto.png',
+  },
+  {
+    nome: 'Primeiro Piso',
+    descricao: 'Adicione 2 de vida ao seu castelo',
+    imagem: '/assets/img/primeiropiso/primeiropiso.png',
+  },
+  {
+    nome:'Muro de Barro',
+    descricao: 'Adicione 3 de vida ao seu muro',
+    imagem: '/assets/img/murodebarro/murodebarro.png',
+  },
+  {
+    nome:'Arqueiro',
+    descricao: 'Cause 3 de dano ao castelo inimigo',
+    imagem: '/assets/img/arqueiro/arqueiro.png',
+  },
+  {
+    nome:'Contrabando',
+    descricao: 'Adicione 8 de vida ao seu castelo, inimigo perde 4 de vida de castelo',
+    imagem: '/assets/img/contrabando/contrabando.png',
+  },
+  {
+    nome:'Ponte Protegida',
+    descricao: 'Adicione 6 de vida ao seu muro',
+    imagem: '/assets/img/ponteprotegida/ponteprotegida.png',
+  },
+  {
+    nome:'Catapulta',
+    descricao: 'Cause 12 de dano ao castelo inimigo',
+    imagem: '/assets/img/catapulta/catapulta.png',
+  }
 ];
 
 
