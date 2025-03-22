@@ -1,3 +1,10 @@
+// ARRAY DE CARTAS
+const cartas = [
+
+];
+
+
+
 
 // Arrays dos players:
 const players = {
@@ -44,7 +51,19 @@ function attUI(){
 
 //Função para desabilitar Selecao de cartas do jogador
 function desabilitarSelecao(){
-  document.querySelector('.selecionaveis').disabled = true;
+  const cartasJogador1 = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
+  cartasJogador1.forEach(carta => {
+    carta.classList.add('desabilitada');
+  });
+}
+
+
+//Função para habilitar novamente a seleção
+function habilitarSelecao(){
+  const cartasJogador1 = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
+  cartasJogador1.forEach(carta => {
+    carta.classList.remove('desabilitada');
+  });
 }
 
 
@@ -79,4 +98,18 @@ function botJoga(){
 
   currentPlayer = currentPlayer === 2 ? 1 : 2;
   attUI();
+}
+
+//Função para escolher qual FUNÇÃO DE CARTA será executada no click
+function escolherFuncaoCarta(carta){
+  const funcao = carta.dataset.funcao;
+  window[funcao]();
+}
+
+
+
+// A PARTIR DAQUI COMEÇAM AS FUNÇÕES DE CADA CARTA
+function ataqueDireto(){
+  players[currentPlayer === 1 ? 2 : 1].castelo -= 5;
+  proximaRodada();
 }
