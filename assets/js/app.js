@@ -42,8 +42,8 @@ function attUI(){
   }
 }
 
-//Função para desabilitar UI do jogador
-function desabilitarUI(){
+//Função para desabilitar Selecao de cartas do jogador
+function desabilitarSelecao(){
   document.querySelector('.selecionaveis').disabled = true;
 }
 
