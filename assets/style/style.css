@@ -62,7 +62,7 @@ body{
     flex-direction: row;
     border: black 5px solid;
     border-radius: 10px;
-    width: 20%;
+    width: 40%;
     transition: transform 0.3s ease;
   }
 

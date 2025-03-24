@@ -1,39 +1,117 @@
 // ARRAY DE CARTAS
 const cartas = [
   {
-    nome: 'Ataque Direto',
-    descricao: 'Cause 3 de dano ao castelo inimigo',
-    imagem: '/assets/img/ataquedireto/ataquedireto.png',
+    nome: 'alistamento',
+    efeito:{
+      tipo: 'adiciona',
+      alvo: 'soldados',
+      quantidade: 1
+    },
+    custo: {
+      recurso: 'armas',
+      quantidade: 8
+  },
+  imagem: '/assets/img/alistamento/alistamento.png',
+},
+  {
+    nome: 'arqueiro',
+    efeito:{
+      tipo: 'dano',
+      alvo: 'castelo',
+      quantidade: 3
+    },
+    custo:{
+      recurso: 'armas',
+      quantidade: 1
+    },
+    imagem: '/assets/img/arqueiro/arqueiro.png'
   },
   {
-    nome: 'Primeiro Piso',
-    descricao: 'Adicione 2 de vida ao seu castelo',
-    imagem: '/assets/img/primeiropiso/primeiropiso.png',
+
   },
   {
-    nome:'Muro de Barro',
-    descricao: 'Adicione 3 de vida ao seu muro',
-    imagem: '/assets/img/murodebarro/murodebarro.png',
+
   },
   {
-    nome:'Arqueiro',
-    descricao: 'Cause 3 de dano ao castelo inimigo',
-    imagem: '/assets/img/arqueiro/arqueiro.png',
+
   },
   {
-    nome:'Contrabando',
-    descricao: 'Adicione 8 de vida ao seu castelo, inimigo perde 4 de vida de castelo',
-    imagem: '/assets/img/contrabando/contrabando.png',
+
   },
   {
-    nome:'Ponte Protegida',
-    descricao: 'Adicione 6 de vida ao seu muro',
-    imagem: '/assets/img/ponteprotegida/ponteprotegida.png',
+
   },
   {
-    nome:'Catapulta',
-    descricao: 'Cause 12 de dano ao castelo inimigo',
-    imagem: '/assets/img/catapulta/catapulta.png',
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
+  },
+  {
+
   }
 ];
 
@@ -72,7 +150,7 @@ let currentPlayer = 1;
 // Função para atualizar a interface do usuário
 function attUI(){
   for(let i = 1; i <= 2; i++){
-    document.getElementById(`p${i}-vida`).textContent = players[i].castelo;
+    document.getElementById(`p${i}-castelo`).textContent = players[i].castelo;
     document.getElementById(`p${i}-muro`).textContent = players[i].muro;
     document.getElementById(`p${i}-tijolos`).textContent = players[i].tijolos;
     document.getElementById(`p${i}-construtores`).textContent = players[i].construtores;
@@ -108,12 +186,12 @@ function verificarJogador(){
   if(currentPlayer === 1){
     const p = players[2];
     p.tijolos += p.construtores;
-    p.soldados += p.armas;
+    p.armas += p.soldados;
     p.cristais += p.magos;
     }else{
       const p = players[1];
       p.tijolos += p.construtores;
-      p.soldados += p.armas;
+      p.armas += p.soldados;
       p.cristais += p.magos;
     }
 }
@@ -143,7 +221,42 @@ function escolherFuncaoCarta(carta){
 
 
 // A PARTIR DAQUI COMEÇAM AS FUNÇÕES DE CADA CARTA
-function ataqueDireto(){
-  players[currentPlayer === 1 ? 2 : 1].castelo -= 5;
-  proximaRodada();
+function aplicarEfeito(nomeCarta){
+  const carta = cartas.find(c => c.nome === nomeCarta);
+
+  if(!carta || !carta.efeito){
+    console.error('Carta não encontrada ou sem efeito', nomeCarta);
+    return;
+  }
+
+  const jogador = players[currentPlayer];
+  const efeito = carta.efeito;
+  const custo = carta.custo;
+  const recurso = carta.custo.recurso;
+  const qtdRecurso = carta.custo.quantidade;
+
+  let recursoJogador = jogador[recurso];
+
+  if(recursoJogador < qtdRecurso){
+    alert('Sem quantidade suficiente');
+    return;
+  }
+  
+
+
+  if(efeito.tipo === 'adiciona'){
+    
+    jogador[efeito.alvo] += efeito.quantidade;
+    jogador[recurso] -= qtdRecurso;
+    attUI();
+
+  }
+
+
+
+
+
+
+
+
 }
