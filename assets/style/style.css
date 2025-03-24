@@ -63,11 +63,13 @@ body{
     border: black 5px solid;
     border-radius: 10px;
     width: 20%;
+    transition: transform 0.3s ease;
   }
 
   .campo__jogo__jogador__carta.selecionaveis:hover{
     border: green 5px solid;
     cursor: pointer;
+    transform: scale(1.1);
   }
 
   .campo__jogo__jogador__carta.tabuleiro{
