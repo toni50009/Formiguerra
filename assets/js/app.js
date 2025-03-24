@@ -27,10 +27,30 @@ const cartas = [
     imagem: '/assets/img/arqueiro/arqueiro.png'
   },
   {
-
+    nome: 'ataquedireto',
+    efeito:{
+      tipo: 'dano',
+      alvo: 'castelo',
+      quantidade: 3
+    },
+    custo: {
+      recurso: 'armas',
+      quantidade: 2
+  },
+  imagem: '/assets/img/ataquedireto/ataquedireto.png',
   },
   {
-
+    nome: 'ataquetriplo',
+    efeito:{
+      tipo: 'dano',
+      alvo: 'castelo',
+      quantidade: 6
+    },
+    custo: {
+      recurso: 'armas',
+      quantidade: 4
+  },
+  imagem: '/assets/img/ataquetriplo/ataquetriplo.png',
   },
   {
 
@@ -248,6 +268,13 @@ function aplicarEfeito(nomeCarta){
     
     jogador[efeito.alvo] += efeito.quantidade;
     jogador[recurso] -= qtdRecurso;
+    attUI();
+
+  }else if(efeito.tipo === 'dano'){
+
+    jogadorAlvo = currentPlayer === 1 ? 2 : 1;
+
+    players[jogadorAlvo].castelo -= efeito.quantidade;
     attUI();
 
   }
