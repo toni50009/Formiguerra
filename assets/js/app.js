@@ -3,7 +3,7 @@ const cartas = [
   {
     nome: 'alistamento',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'soldados',
       quantidade: 1
     },
@@ -55,7 +55,7 @@ const cartas = [
   {
     nome: 'babilonia',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'castelo',
       quantidade: 32
     },
@@ -80,7 +80,7 @@ const cartas = [
   {
     nome: 'conjurararmas',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'armas',
       quantidade: 8
     },
@@ -93,7 +93,7 @@ const cartas = [
   {
     nome: 'conjurarcristais',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'cristais',
       quantidade: 8
     },
@@ -106,7 +106,7 @@ const cartas = [
   {
     nome: 'conjurartijolos',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'tijolos',
       quantidade: 8
     },
@@ -119,15 +119,11 @@ const cartas = [
   {
     nome: 'contrabando',
     efeito:{
-      tipo: {
-        tipo1: 'adiciona',
-        tipo2: 'remove'
-      },
-      alvo: {
-        alvo1: 'tijolos',
-        alvo2: 'cristais',
-        alvo3: 'armas'
-      },
+      tipo: 'gangorra',
+      alvo: ['tijolos',
+        'armas',
+        'cristais'
+      ],
       quantidade: 5
     },
     custo: {
@@ -139,7 +135,7 @@ const cartas = [
   {
     nome: 'demolirarmas',
     efeito:{
-      tipo: 'remove',
+      tipo: 'remover',
       alvo: 'armas',
       quantidade: 8
     },
@@ -152,7 +148,7 @@ const cartas = [
   {
     nome: 'demolircristais',
     efeito:{
-      tipo: 'remove',
+      tipo: 'remover',
       alvo: 'cristais',
       quantidade: 8
     },
@@ -165,7 +161,7 @@ const cartas = [
   {
     nome: 'demolirtijolos',
     efeito:{
-      tipo: 'remove',
+      tipo: 'remover',
       alvo: 'tijolos',
       quantidade: 8
     },
@@ -178,7 +174,7 @@ const cartas = [
   {
     nome: 'fortaleza',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'castelo',
       quantidade: 20
     },
@@ -204,12 +200,11 @@ const cartas = [
   {
     nome: 'incendiar',
     efeito:{
-      tipo: 'remove',
-      alvo: {
-        alvo1: 'tijolos',
-        alvo2: 'armas',
-        alvo3: 'cristais'
-      },
+      tipo: 'remover',
+      alvo: ['tijolos',
+        'armas',
+        'cristais'
+      ],
       quantidade: 4
     },
     custo: {
@@ -221,15 +216,9 @@ const cartas = [
   {
     nome: 'injustica',
     efeito:{
-      tipo: {
-        tipo1: 'adiciona',
-        tipo2: 'remove'
-      },
+      tipo: 'gangorra',
       alvo: 'castelo',
-      quantidade: {
-        quantidadeadiciona: 8,
-        quantidaderemove: 4
-      }
+      quantidade: [8,4]
     },
     custo: {
       recurso: 'tijolos',
@@ -240,18 +229,15 @@ const cartas = [
   {
     nome: 'maldicao',
     efeito:{
-      tipo: {
-        tipo1: 'adiciona',
-        tipo2: 'remove'
-      },
-      alvo: {
-        alvo1: 'tijolos',
-        alvo2: 'armas',
-        alvo3: 'cristais',
-        alvo4: 'construtores',
-        alvo5: 'soldados',
-        alvo6: 'magos'
-      },
+      tipo: 'gangorratudo',
+      alvo: [
+         'tijolos',
+         'armas',
+         'cristais',
+         'construtores',
+         'soldados',
+         'magos'
+      ],
       quantidade: 1
     },
     custo: {
@@ -263,7 +249,7 @@ const cartas = [
   {
     nome: 'merlin',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'magos',
       quantidade: 1
     },
@@ -289,7 +275,7 @@ const cartas = [
   {
     nome: 'muralha',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'muro',
       quantidade: 22
     },
@@ -302,7 +288,7 @@ const cartas = [
   {
     nome: 'murodebarro',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'muro',
       quantidade: 3
     },
@@ -313,22 +299,9 @@ const cartas = [
   imagem: '/assets/img/murodebarro/murodebarro.png',
   },
   {
-    nome: 'musgorigido',
-    efeito:{
-      tipo: 'adiciona',
-      alvo: 'castelo',
-      quantidade: 8
-    },
-    custo: {
-      recurso: 'tijolos',
-      quantidade: 6
-  },
-  imagem: '/assets/img/musgorigido/musgorigido.png',
-  },
-  {
     nome: 'pixies',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'castelo',
       quantidade: 22
     },
@@ -341,7 +314,7 @@ const cartas = [
   {
     nome: 'musgorigido',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'castelo',
       quantidade: 8
     },
@@ -354,7 +327,7 @@ const cartas = [
   {
     nome: 'ponteprotegida',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'muro',
       quantidade: 6
     },
@@ -367,7 +340,7 @@ const cartas = [
   {
     nome: 'primeiropiso',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'castelo',
       quantidade: 5
     },
@@ -406,7 +379,7 @@ const cartas = [
   {
     nome: 'torredevigia',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'castelo',
       quantidade: 5
     },
@@ -419,7 +392,7 @@ const cartas = [
   {
     nome: 'universidade',
     efeito:{
-      tipo: 'adiciona',
+      tipo: 'adicionar',
       alvo: 'construtores',
       quantidade: 1
     },
@@ -439,9 +412,9 @@ const players = {
   1: {
     castelo: 30,
     muro: 10,
-    tijolos: 5,
-    armas: 5,
-    cristais: 5,
+    tijolos: 50,
+    armas: 50,
+    cristais: 50,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -470,13 +443,33 @@ function escolherCarta(){
   maosJogadores.forEach((el) => {
     let indice = Math.floor(Math.random() * cartas.length);
     const cartaSelecionada = cartas[indice];
-    el.innerHTML += `
-    <img src="${cartaSelecionada.imagem}"  class="carta" alt="${cartaSelecionada.nome}" onclick="aplicarEfeito('${cartaSelecionada.nome}')">
+      el.innerHTML += `
+    <img src="${cartaSelecionada.imagem}"  class="carta" alt="${cartaSelecionada.nome}" data-nome="${cartaSelecionada.nome}" onclick="jogarCarta(this)">
     `;
   });
 }
 
 escolherCarta();
+
+
+
+// EFEITO DA CARTA E RODAR NOVA CARTA
+function jogarCarta(img){
+
+  const nomeCarta = img.dataset.nome;
+
+  aplicarEfeito(nomeCarta);
+
+  let novaCarta = cartas[Math.floor(Math.random() * cartas.length)];
+
+  img.src = novaCarta.imagem;
+  img.alt = novaCarta.nome;
+  img.dataset.nome = novaCarta.nome;
+  img.setAttribute("onclick", "jogarCarta(this)");
+
+  verificaCusto();
+
+}
 
 
 
@@ -492,6 +485,7 @@ function attUI(){
     document.getElementById(`p${i}-cristais`).textContent = players[i].cristais;
     document.getElementById(`p${i}-magos`).textContent = players[i].magos;
   }
+  verificaCusto();
 }
 
 //Função para desabilitar Selecao de cartas do jogador
@@ -539,22 +533,40 @@ function proximaRodada(){
 
 //Função para o BOT jogar
 function botJoga(){
-  document.querySelector('.campo__jogo__jogador__carta.selecionaveis').disabed = true;
+  document.querySelector('.campo__jogo__jogador__carta.selecionaveis').disabled = true;
 
   currentPlayer = currentPlayer === 2 ? 1 : 2;
   attUI();
 }
 
-//Função para escolher qual FUNÇÃO DE CARTA será executada no click
-function escolherFuncaoCarta(carta){
-  const funcao = carta.dataset.funcao;
-  window[funcao]();
+
+// DESABILITA O CLIQUE DA CARTA SE NÃO TEM RECURSO
+function verificaCusto(){
+  const maoJogador = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
+
+  maoJogador.forEach((divCarta) => {
+    const img = divCarta.querySelector('img');
+
+    if (!img) return; // segurança
+
+    const nomeCarta = img.dataset.nome;
+    const carta = cartas.find(c => c.nome === nomeCarta);
+
+    if (!carta) return;
+
+    const custo = carta.custo;
+    const jogador = players[currentPlayer];
+
+    if (jogador[custo.recurso] < custo.quantidade) {
+      divCarta.classList.add('desabilitada');
+    } else {
+      divCarta.classList.remove('desabilitada');
+    }
+  });
 }
 
 
-
-
-// A PARTIR DAQUI COMEÇAM AS FUNÇÕES DE CADA CARTA
+// CHAMADA SEMPRE QUE UMA SELECIONAVEL FOR CLICADA
 function aplicarEfeito(nomeCarta){
 
   const carta = cartas.find(c => c.nome === nomeCarta);
@@ -564,7 +576,11 @@ function aplicarEfeito(nomeCarta){
     return;
   }
 
+ 
+  let njogadorAlvo = currentPlayer === 1 ? 2 : 1;
+
   const jogador = players[currentPlayer];
+  const jogadorAlvo = players[njogadorAlvo];
   const efeito = carta.efeito;
   const custo = carta.custo;
   const recurso = carta.custo.recurso;
@@ -572,31 +588,89 @@ function aplicarEfeito(nomeCarta){
 
   let recursoJogador = jogador[recurso];
 
+
   if(recursoJogador < qtdRecurso){
     alert('Sem quantidade suficiente');
     return;
   }
   
 
-  if(efeito.tipo === 'adiciona'){
+  if(efeito.tipo === 'adicionar'){
     
     jogador[efeito.alvo] += efeito.quantidade;
-    attUI();
 
   }else if(efeito.tipo === 'dano'){
 
-    jogadorAlvo = currentPlayer === 1 ? 2 : 1;
+    let dano = efeito.quantidade;
+    let muroAtual = players[njogadorAlvo].muro;
 
-    players[jogadorAlvo].castelo -= efeito.quantidade;
-    attUI();
 
+    if(muroAtual > 0){
+      players[njogadorAlvo].muro -= dano;
+
+      if(players[njogadorAlvo].muro < 0){
+        let overkill = Math.abs(players[njogadorAlvo].muro);
+        players[njogadorAlvo].muro = 0;
+        players[njogadorAlvo].castelo -= overkill;
+      }
+
+  }else{
+    players[njogadorAlvo].castelo -= dano;
   }
 
 
-
-
-
-
-
-  jogador[recurso] -= qtdRecurso;
 }
+
+
+if(efeito.tipo === 'remover'){
+  if(typeof efeito.alvo === 'string'){
+  jogadorAlvo[efeito.alvo] -= efeito.quantidade;
+  if (jogadorAlvo[efeito.alvo] < 0) jogadorAlvo[efeito.alvo] = 0;
+
+}else if(Array.isArray(efeito.alvo)){
+  efeito.alvo.forEach(recurso => {
+    jogadorAlvo[recurso] -= efeito.quantidade;
+    if(jogadorAlvo[recurso] < 0) jogadorAlvo[recurso] = 0;
+  })
+}
+  
+}
+
+
+
+if(efeito.tipo === 'gangorra'){
+  if(typeof efeito.alvo === 'string'){
+  jogador[efeito.alvo] += efeito.quantidade[0];
+  jogadorAlvo[efeito.alvo] -= efeito.quantidade[1];
+  if(jogadorAlvo[efeito.alvo] < 0) jogadorAlvo[efeito.alvo] = 0;
+
+}else if(Array.isArray(efeito.alvo)){
+  efeito.alvo.forEach(recurso =>{
+    if(jogadorAlvo[recurso] > 4){
+      jogador[recurso] += efeito.quantidade;
+      jogadorAlvo[recurso] -= efeito.quantidade;
+    }else if(jogadorAlvo[recurso] > 0 && jogadorAlvo[recurso] < 4){
+      jogador[recurso] += jogadorAlvo[recurso];
+      jogadorAlvo[recurso] = 0;
+    }});
+}
+
+}
+
+
+if (efeito.tipo === 'gangorratudo') {
+  for (let i = 0; i < efeito.alvo.length; i++) {
+    const chave = efeito.alvo[i];
+    jogador[chave] += efeito.quantidade;
+    jogadorAlvo[chave] -= efeito.quantidade;
+  }
+}
+
+jogador[recurso] -= qtdRecurso;
+attUI();
+
+}
+
+
+
+//Funções separadas para facilitar manutenção e leitura, mas poderia ser tudo em uma função só

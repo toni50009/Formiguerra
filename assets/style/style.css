@@ -73,15 +73,19 @@ p{
   .campo__jogo__jogador{
     display: flex;
     height: 40%;
-    padding: 10px;
-    gap: 0.9rem;
+    background: #f4f4dc;
+
+  }
+
+  .campo__jogo__jogador.p1{
+    align-self: flex-end;
   }
 
   .campo__jogo__tabuleiro{
     display: flex;
     justify-content: space-between;
     min-width: 100%;
-    height: auto;
+    margin-bottom: 7.5rem;
   }
 
   .campo__jogo__tabuleiro__suavez{
@@ -102,20 +106,35 @@ p{
     width: 100%;
     border: black 0.25rem solid;
     border-radius: 10px;
-    transition: transform 0.3s ease;
+
+  }
+
+  .campo__jogo__jogador__carta.selecionaveis {
+    transition: transform 0.2s ease, border 0.2s ease;
   }
 
   
   .campo__jogo__jogador__carta.selecionaveis:hover{
     border: green 0.25rem solid;
     cursor: pointer;
-    transform: scale(1.1);
+    transform: translateY(-1.225rem); 
   }
 
 
   .desabilitada{
-    pointer-events:none;
     opacity: 0.8;
+  }
+
+  @keyframes piscar-vermelho {
+    0%   { color: inherit; }
+    25%  { color: red; }
+    50%  { color: inherit; }
+    75%  { color: red; }
+    100% { color: inherit; }
+  }
+  
+  .piscar-alerta {
+    animation: piscar-vermelho 0.6s ease-in-out 1;
   }
 
   
