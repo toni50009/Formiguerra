@@ -280,7 +280,7 @@ const cartas = [
       quantidade: 22
     },
     custo: {
-      recurso: 'tijolos ',
+      recurso: 'tijolos',
       quantidade: 12
   },
   imagem: '/assets/img/muralha/muralha.png',
@@ -412,9 +412,9 @@ const players = {
   1: {
     castelo: 30,
     muro: 10,
-    tijolos: 50,
-    armas: 50,
-    cristais: 50,
+    tijolos: 1,
+    armas: 1,
+    cristais: 10,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -449,7 +449,10 @@ function escolherCarta(){
   });
 }
 
+
+//Jogo começa aqui com o currentplayer === 1
 escolherCarta();
+verificaCusto();
 
 
 
@@ -457,20 +460,57 @@ escolherCarta();
 function jogarCarta(img){
 
   const nomeCarta = img.dataset.nome;
+  const divCarta = img.parentElement;
+  const classeCampo = document.querySelector('.campo__jogo');
 
+  if(divCarta.classList.contains('descartavel')){
+    const divMensagem =  document.createElement('div');
+    divMensagem.classList.add('mensagem');
+    divMensagem.innerHTML = `
+    Quer descartar esta carta? você receberá 1 de todos os recursos se fizer
+    <button id="sim">Sim</button>
+    <button id="nao">Não</button>
+    `; 
+    classeCampo.appendChild(divMensagem);
+    classeCampo.classList.add('naoclicavel');
+
+    document.getElementById('sim').addEventListener('click', () =>{
+      const p = players[currentPlayer];
+      p.tijolos += 1;
+      p.armas += 1;
+      p.cristais += 1;
+      novaCarta(img);
+      divMensagem.remove();
+      divCarta.classList.remove('descartavel');
+      classeCampo.classList.remove('naoclicavel');
+      attUI();
+      verificaCusto();
+    });
+
+    document.getElementById('nao').addEventListener('click', () =>{
+      divMensagem.remove();
+      classeCampo.classList.remove('naoclicavel');
+      attUI();
+      return;
+    })
+  }else{
   aplicarEfeito(nomeCarta);
+  novaCarta(img);
+  verificaCusto();
+  }
+}
 
+
+
+//Gerar nova Carta
+function novaCarta(img){
   let novaCarta = cartas[Math.floor(Math.random() * cartas.length)];
 
   img.src = novaCarta.imagem;
   img.alt = novaCarta.nome;
   img.dataset.nome = novaCarta.nome;
   img.setAttribute("onclick", "jogarCarta(this)");
-
-  verificaCusto();
-
 }
-
 
 
 // Função para atualizar a interface do usuário
@@ -559,8 +599,10 @@ function verificaCusto(){
 
     if (jogador[custo.recurso] < custo.quantidade) {
       divCarta.classList.add('desabilitada');
+      divCarta.classList.add('descartavel');
     } else {
       divCarta.classList.remove('desabilitada');
+      divCarta.classList.remove('descartavel');
     }
   });
 }
@@ -585,15 +627,8 @@ function aplicarEfeito(nomeCarta){
   const custo = carta.custo;
   const recurso = carta.custo.recurso;
   const qtdRecurso = carta.custo.quantidade;
+  const recursoJogador = jogador[recurso];
 
-  let recursoJogador = jogador[recurso];
-
-
-  if(recursoJogador < qtdRecurso){
-    alert('Sem quantidade suficiente');
-    return;
-  }
-  
 
   if(efeito.tipo === 'adicionar'){
     
