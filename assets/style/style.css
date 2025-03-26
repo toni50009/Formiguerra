@@ -8,26 +8,6 @@ p{
   font-weight: bold;
 }
 
-.campo{
-    display: flex;
-    flex-direction: row;
-    height: 100vh;
-}
-
-
-.campo__jogo{
-  display: flex;
-  box-sizing: border-box;
-  flex-direction: column;
-  width: 100%;
-  max-height: 100%;
-  border-radius: 10px;
-  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
-
-  background-image: url('/assets/img/background.png');
-  background-size: cover;
-  background-position: center;
-}
 
 
 .naoclicavel{
@@ -58,13 +38,10 @@ p{
     box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
   }
 
-.player.p1{
+.player.vez{
   background-color: #8ce9a8;
 }
 
-.player.p2{
-  background-color: #e47070;
-}
 
   .player__area{
     display: flex;
@@ -84,44 +61,75 @@ p{
     margin-bottom: 10px;
   }
 
-
-
-  .campo__jogo__jogador{
-    display: flex;
-    height: 16.7rem;
-    background: #f4f4dc;
-  }
-
-  .campo__jogo__jogador.p1{
-    align-self: flex-end;
-  }
-
-  .campo__jogo__tabuleiro{
-    display: flex;
-    justify-content: space-between;
-    min-width: 100%;
-    margin-bottom: 7.5rem;
-  }
-
-  .campo__jogo__tabuleiro__suavez{
-    display: flex;
-    background-color: #fffaf0;
-  }
-
-  .campo__jogo__tabuleiro__vezbot{
-    display: flex;
-    background-color:  #fffaf0;;
-    justify-content: right;
-  }
-
-  .campo__jogo__jogador__carta{
+  .campo {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  
+  
+  .campo__jogo {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     width: 100%;
+    height: 100vh;
+    padding: 1rem;
+    background-image: url('/assets/img/background.png');
+    background-size: cover;
+    background-position: center;
+    box-sizing: border-box;
+  }
+
+  .campo__cartas{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+  }
+  .campo__cartas.bot {
+    margin-bottom: 1.5vh;
+    padding-top: 10.5vh;
+  }
+
+  .campo__cartas.jogador{
+    margin-top: 1.5vh;
+  }
+  
+
+  .campo__jogo__jogador {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 1rem;
+    height: 22vh;
+    width: 90%;
+    padding: 0.5rem;
+    border-radius: 10px;
+    box-sizing: border-box;
+  }
+  
+  
+  .campo__jogo__jogador__carta {
+    flex: 1 1 auto;
+    max-width: 12vw;
     border: black 0.25rem solid;
     border-radius: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
 
+  .campo__jogo__jogador__carta img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .campo__jogo__jogador.p1 {
+    align-self: flex-end;
+    margin-top: auto;
   }
 
   .campo__jogo__jogador__carta.selecionaveis {
@@ -129,30 +137,34 @@ p{
   }
 
   
-  .campo__jogo__jogador__carta.selecionaveis:hover{
+  .campo__jogo__jogador__carta.selecionaveis:hover {
     border: green 0.25rem solid;
     cursor: pointer;
-    transform: translateY(-1.225rem); 
+    transform: translateY(-1rem);
+    transition: transform 0.2s ease, border 0.2s ease;
   }
 
-
-  .desabilitada{
-    opacity: 0.8;
-  }
-
-  @keyframes piscar-vermelho {
-    0%   { color: inherit; }
-    25%  { color: red; }
-    50%  { color: inherit; }
-    75%  { color: red; }
-    100% { color: inherit; }
-  }
-  
-  .piscar-alerta {
-    animation: piscar-vermelho 0.6s ease-in-out 1;
+  .campo__jogo__jogador__carta.jogada{
+    transform: translateY(-3rem);
   }
 
   
+  .campo__jogo__jogador__carta.selecionaveis.desabilitada:hover::after {
+    content: "Sem Recurso";
+    position: absolute;
+    top: 10%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: rgba(50, 50, 50, 0.8);
+    color: white;
+    border: rgb(143, 24, 3) 0.25rem solid;
+    border-radius: 8px;
+    pointer-events: none;
+    z-index: 10;
+    white-space: nowrap;
+  }
+
+
 
   .carta{
     display: flex;
@@ -168,3 +180,38 @@ p{
 
 
 
+  .castle-bar-wrapper {
+    width: 100px;
+    height: 20px;
+    background-color: #ccc;
+    border: 1px solid #333;
+  }
+  .castle-bar {
+    height: 100%;
+    background-color: #3498db;
+    width: 50%; /* atualizado por JS */
+  }
+
+
+  #enemyCastleBar {
+    background-color: #e74c3c; /* vermelho */
+  }
+
+  @keyframes jogarCarta {
+    0% {
+      transform: translate(0, 0) scale(1);
+      z-index: 10;
+    }
+    50% {
+      transform: translate(0, -200px) scale(1.2);
+      z-index: 10;
+    }
+    100% {
+      transform: translate(0, 0) scale(1);
+      z-index: 1;
+    }
+  }
+  
+  .animar-carta {
+    animation: jogarCarta 2s ease-in-out;
+  }

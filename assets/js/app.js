@@ -412,9 +412,9 @@ const players = {
   1: {
     castelo: 30,
     muro: 10,
-    tijolos: 1,
-    armas: 1,
-    cristais: 10,
+    tijolos: 15,
+    armas: 40,
+    cristais: 60,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -422,87 +422,44 @@ const players = {
   2: {
     castelo: 30,
     muro: 10,
-    tijolos: 5,
-    armas: 5,
-    cristais: 5,
+    tijolos: 0,
+    armas: 0,
+    cristais: 0,
     construtores: 2,
     soldados: 2,
     magos: 2
   }
 };
 
-//globais
+//GLOBAIS
 let currentPlayer = 1;
 
 
-//Função para escolher aleatoriamente uma carta para o jogador
-function escolherCarta(){
+//HIGHLIGHT EM QUEM ESTÁ JOGANDO
+function adicionaCor(){
+  if(currentPlayer === 1){
+    document.querySelector('.player.p1').classList.add('vez');
+  }
+}
 
+
+//ESCOLHER CADA CARTA ALEATORIAMENTE
+function escolherCarta(){
 
   const maosJogadores = document.querySelectorAll('.campo__jogo__jogador__carta');
   maosJogadores.forEach((el) => {
+    const checkBot = el.classList.contains('bot');
+
     let indice = Math.floor(Math.random() * cartas.length);
     const cartaSelecionada = cartas[indice];
       el.innerHTML += `
-    <img src="${cartaSelecionada.imagem}"  class="carta" alt="${cartaSelecionada.nome}" data-nome="${cartaSelecionada.nome}" onclick="jogarCarta(this)">
+    <img src="${checkBot ? '/assets/img/molde.png' : cartaSelecionada.imagem}"  class="carta" alt="${cartaSelecionada.nome}" data-nome="${cartaSelecionada.nome}" onclick="jogarCarta(this)">
     `;
   });
 }
 
 
-//Jogo começa aqui com o currentplayer === 1
-escolherCarta();
-verificaCusto();
-
-
-
-// EFEITO DA CARTA E RODAR NOVA CARTA
-function jogarCarta(img){
-
-  const nomeCarta = img.dataset.nome;
-  const divCarta = img.parentElement;
-  const classeCampo = document.querySelector('.campo__jogo');
-
-  if(divCarta.classList.contains('descartavel')){
-    const divMensagem =  document.createElement('div');
-    divMensagem.classList.add('mensagem');
-    divMensagem.innerHTML = `
-    Quer descartar esta carta? você receberá 1 de todos os recursos se fizer
-    <button id="sim">Sim</button>
-    <button id="nao">Não</button>
-    `; 
-    classeCampo.appendChild(divMensagem);
-    classeCampo.classList.add('naoclicavel');
-
-    document.getElementById('sim').addEventListener('click', () =>{
-      const p = players[currentPlayer];
-      p.tijolos += 1;
-      p.armas += 1;
-      p.cristais += 1;
-      novaCarta(img);
-      divMensagem.remove();
-      divCarta.classList.remove('descartavel');
-      classeCampo.classList.remove('naoclicavel');
-      attUI();
-      verificaCusto();
-    });
-
-    document.getElementById('nao').addEventListener('click', () =>{
-      divMensagem.remove();
-      classeCampo.classList.remove('naoclicavel');
-      attUI();
-      return;
-    })
-  }else{
-  aplicarEfeito(nomeCarta);
-  novaCarta(img);
-  verificaCusto();
-  }
-}
-
-
-
-//Gerar nova Carta
+//NOVA CARTA PARA A MÃO
 function novaCarta(img){
   let novaCarta = cartas[Math.floor(Math.random() * cartas.length)];
 
@@ -513,7 +470,37 @@ function novaCarta(img){
 }
 
 
-// Função para atualizar a interface do usuário
+//TOCAR O SOM CORRESPONDENTE
+function tocarSom(img){
+  const nomeCarta = img.dataset.nome;
+  const carta = cartas.find(c => c.nome === nomeCarta);
+  const efeito = carta.efeito;
+
+  switch (efeito.tipo) {
+    case 'adicionar':
+      if (efeito.alvo === 'castelo' || efeito.alvo === 'muro') {
+        document.getElementById("somcastelo").play();
+      } else {
+        document.getElementById("somadicionar").play();
+      }
+      break;
+  
+    case 'dano':
+      document.getElementById("somdano").play();
+      break;
+  
+    case 'gangorra':
+      document.getElementById("somgangorra").play();
+      break;
+  
+    case 'remover':
+      document.getElementById("somremover").play();
+      break;
+  }
+}
+
+
+//ATUALIZAR DADOS INTERFACE
 function attUI(){
   for(let i = 1; i <= 2; i++){
     document.getElementById(`p${i}-castelo`).textContent = players[i].castelo;
@@ -526,61 +513,40 @@ function attUI(){
     document.getElementById(`p${i}-magos`).textContent = players[i].magos;
   }
   verificaCusto();
+
+
+let percentPlayer = (players[1].castelo / 100) * 100;
+document.getElementById('playerCastleBar').style.width = percentPlayer + '%';
+let percentPlayerWall = (players[1].muro / 100) * 100;
+document.getElementById('playerWallBar').style.width = percentPlayerWall + '%';
+
+
+let percentEnemy = (players[2].castelo / 100) * 100;
+document.getElementById('enemyCastleBar').style.width = percentEnemy + '%';
+let percentEnemyWall = (players[2].muro / 100) * 100;
+document.getElementById('enemyWallBar').style.width = percentEnemyWall + '%';
 }
 
-//Função para desabilitar Selecao de cartas do jogador
+
+//DESABILITAR SELECAO 
 function desabilitarSelecao(){
   const cartasJogador1 = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
   cartasJogador1.forEach(carta => {
-    carta.classList.add('desabilitada');
+    carta.classList.add('naoclicavel');
   });
 }
 
 
-//Função para habilitar novamente a seleção
+//HABILITAR NOVAMENTE
 function habilitarSelecao(){
   const cartasJogador1 = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
   cartasJogador1.forEach(carta => {
-    carta.classList.remove('desabilitada');
+    carta.classList.remove('naoclicavel');
   });
 }
 
 
-
-
-//Função para verificar de qual jogar vai somar recursos
-function verificarJogador(){
-  if(currentPlayer === 1){
-    const p = players[2];
-    p.tijolos += p.construtores;
-    p.armas += p.soldados;
-    p.cristais += p.magos;
-    }else{
-      const p = players[1];
-      p.tijolos += p.construtores;
-      p.armas += p.soldados;
-      p.cristais += p.magos;
-    }
-}
-
-//Função para mostrar a próxima rodada
-function proximaRodada(){
-  verificarJogador();
-
-  currentPlayer = currentPlayer === 1 ? 2 : 1;
-  attUI();
-}
-
-//Função para o BOT jogar
-function botJoga(){
-  document.querySelector('.campo__jogo__jogador__carta.selecionaveis').disabled = true;
-
-  currentPlayer = currentPlayer === 2 ? 1 : 2;
-  attUI();
-}
-
-
-// DESABILITA O CLIQUE DA CARTA SE NÃO TEM RECURSO
+//ADICIONA A CLASSE DESABILITADA SE NAO TIVER RECURSOS
 function verificaCusto(){
   const maoJogador = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
 
@@ -608,16 +574,80 @@ function verificaCusto(){
 }
 
 
+
+
+
+//JOGO COMEÇA AQUI
+adicionaCor();
+escolherCarta();
+verificaCusto();
+attUI();
+
+
+// EFEITO DA CARTA E RODAR NOVA CARTA
+function jogarCarta(img){
+
+
+  const nomeCarta = img.dataset.nome;
+  const divCarta = img.parentElement;
+  const classeCampo = document.querySelector('.campo__jogo');
+
+  if(divCarta.classList.contains('descartavel')){
+    const divMensagem =  document.createElement('div');
+    const carta = cartas.find(c => c.nome === nomeCarta);
+    const recurso = carta.custo.recurso;
+
+    divMensagem.classList.add('mensagem');
+    divMensagem.innerHTML = `
+     Deseja descartar esta cartar e receber +1 do recurso necessário? (${recurso})
+    <button id="sim">Sim</button>
+    <button id="nao">Não</button>
+    `; 
+    classeCampo.appendChild(divMensagem);
+    classeCampo.classList.add('naoclicavel');
+
+    document.getElementById('sim').addEventListener('click', () =>{
+      const p = players[currentPlayer];
+      document.getElementById('somflip').play();
+
+      p[recurso] += 1;
+
+      novaCarta(img);
+      divMensagem.remove();
+      divCarta.classList.remove('descartavel');
+      classeCampo.classList.remove('naoclicavel');
+      attUI();
+      verificaCusto();
+    });
+
+    document.getElementById('nao').addEventListener('click', () =>{
+      divMensagem.remove();
+      classeCampo.classList.remove('naoclicavel');
+      attUI();
+      return;
+    })
+  }else{
+  document.getElementById('somflip').play();
+  divCarta.classList.add('animar-carta');
+  setTimeout(() =>{
+    tocarSom(img);
+  },1000);
+  setTimeout(() =>{
+  divCarta.classList.remove('animar-carta');
+  aplicarEfeito(nomeCarta);
+  novaCarta(img);
+  verificaCusto();
+  },2000);  
+}
+}
+
+
+
+
 // CHAMADA SEMPRE QUE UMA SELECIONAVEL FOR CLICADA
 function aplicarEfeito(nomeCarta){
 
   const carta = cartas.find(c => c.nome === nomeCarta);
-
-  if(!carta || !carta.efeito){
-    console.error('Carta não encontrada ou sem efeito', nomeCarta);
-    return;
-  }
-
  
   let njogadorAlvo = currentPlayer === 1 ? 2 : 1;
 
@@ -629,83 +659,157 @@ function aplicarEfeito(nomeCarta){
   const qtdRecurso = carta.custo.quantidade;
   const recursoJogador = jogador[recurso];
 
+  checarDados(jogador,efeito,jogadorAlvo);
 
+
+jogador[recurso] -= qtdRecurso;
+attUI();
+}
+
+
+//CHECAR OS DADOS
+function checarDados(jogador,efeito,jogadorAlvo){
   if(efeito.tipo === 'adicionar'){
     
-    jogador[efeito.alvo] += efeito.quantidade;
+    adicionar(jogador,efeito);
 
   }else if(efeito.tipo === 'dano'){
 
-    let dano = efeito.quantidade;
-    let muroAtual = players[njogadorAlvo].muro;
-
-
-    if(muroAtual > 0){
-      players[njogadorAlvo].muro -= dano;
-
-      if(players[njogadorAlvo].muro < 0){
-        let overkill = Math.abs(players[njogadorAlvo].muro);
-        players[njogadorAlvo].muro = 0;
-        players[njogadorAlvo].castelo -= overkill;
-      }
-
-  }else{
-    players[njogadorAlvo].castelo -= dano;
-  }
-
+    dano(jogadorAlvo,efeito);
 
 }
-
 
 if(efeito.tipo === 'remover'){
-  if(typeof efeito.alvo === 'string'){
-  jogadorAlvo[efeito.alvo] -= efeito.quantidade;
-  if (jogadorAlvo[efeito.alvo] < 0) jogadorAlvo[efeito.alvo] = 0;
-
-}else if(Array.isArray(efeito.alvo)){
-  efeito.alvo.forEach(recurso => {
-    jogadorAlvo[recurso] -= efeito.quantidade;
-    if(jogadorAlvo[recurso] < 0) jogadorAlvo[recurso] = 0;
-  })
+  remover(jogadorAlvo,efeito); 
 }
-  
-}
-
-
 
 if(efeito.tipo === 'gangorra'){
-  if(typeof efeito.alvo === 'string'){
-  jogador[efeito.alvo] += efeito.quantidade[0];
-  jogadorAlvo[efeito.alvo] -= efeito.quantidade[1];
-  if(jogadorAlvo[efeito.alvo] < 0) jogadorAlvo[efeito.alvo] = 0;
-
-}else if(Array.isArray(efeito.alvo)){
-  efeito.alvo.forEach(recurso =>{
-    if(jogadorAlvo[recurso] > 4){
-      jogador[recurso] += efeito.quantidade;
-      jogadorAlvo[recurso] -= efeito.quantidade;
-    }else if(jogadorAlvo[recurso] > 0 && jogadorAlvo[recurso] < 4){
-      jogador[recurso] += jogadorAlvo[recurso];
-      jogadorAlvo[recurso] = 0;
-    }});
-}
-
+  gangorra(jogador,jogadorAlvo,efeito);
 }
 
 
 if (efeito.tipo === 'gangorratudo') {
+  gangorraTudo(jogador,jogadorAlvo,efeito);
+}
+
+}
+
+//CHECAR SE É NEGATIVO
+function checarNegativo(jogadorAlvo,coisa){
+  if(jogadorAlvo[coisa] < 0) jogadorAlvo[coisa] = 0;
+}
+
+
+
+//FUNCOES DE EFEITOS DAS CARTAS
+function adicionar(jogador, efeito){
+  jogador[efeito.alvo] += efeito.quantidade;
+  attUI();
+}
+
+
+function dano(jogadorAlvo, efeito){
+  let dano = efeito.quantidade;
+  let muroAtual = jogadorAlvo.muro;
+
+  if(muroAtual > 0){
+    jogadorAlvo.muro -= dano;
+
+    if(jogadorAlvo.muro < 0){
+       let overkill = Math.abs(jogadorAlvo.muro);
+       jogadorAlvo.muro = 0;
+       jogadorAlvo.castelo -= overkill;
+    }
+  }else{
+    jogadorAlvo.castelo -= dano;
+  }
+  attUI();
+}
+
+
+function remover(jogadorAlvo,efeito){
+
+  if(typeof efeito.alvo === 'string'){
+    jogadorAlvo[efeito.alvo] -= efeito.quantidade;
+    checarNegativo(jogadorAlvo,efeito.alvo);
+  
+  }else if(Array.isArray(efeito.alvo)){
+    efeito.alvo.forEach(recurso => {
+      jogadorAlvo[recurso] -= efeito.quantidade;
+      checarNegativo(jogadorAlvo,recurso);
+    })
+  }
+  attUI();
+}
+
+
+function gangorra(jogador,jogadorAlvo,efeito){
+
+  if(typeof efeito.alvo === 'string'){
+    jogador[efeito.alvo] += efeito.quantidade[0];
+    jogadorAlvo[efeito.alvo] -= efeito.quantidade[1];
+    checarNegativo(jogadorAlvo,efeito.alvo);
+  
+  }else if(Array.isArray(efeito.alvo)){
+    efeito.alvo.forEach(recurso =>{
+      if(jogadorAlvo[recurso] > 5){
+        jogador[recurso] += efeito.quantidade;
+        jogadorAlvo[recurso] -= efeito.quantidade;
+      }else if(jogadorAlvo[recurso] > 0 && jogadorAlvo[recurso] < 5){
+        jogador[recurso] += jogadorAlvo[recurso];
+        jogadorAlvo[recurso] = 0;
+      }});
+  }
+  attUI();
+}
+
+
+function gangorraTudo(jogador,jogadorAlvo,efeito){
   for (let i = 0; i < efeito.alvo.length; i++) {
     const chave = efeito.alvo[i];
     jogador[chave] += efeito.quantidade;
     jogadorAlvo[chave] -= efeito.quantidade;
+    if(jogadorAlvo[chave] < 0){
+    efeito.alvo == 'construtores' || 
+    efeito.alvo == 'soldados' ||
+    efeito.alvo == 'magos' ?  jogadorAlvo[chave] = 1 : jogadorAlvo[chave] = 0
+    };
   }
+};
+
+
+
+
+//VERIFICAR QUAL JOGADOR RECEBE RECURSOS AO FINAL DA RODADA
+function verificarJogador(){
+  if(currentPlayer === 1){
+    const p = players[2];
+    p.tijolos += p.construtores;
+    p.armas += p.soldados;
+    p.cristais += p.magos;
+    }else{
+      const p = players[1];
+      p.tijolos += p.construtores;
+      p.armas += p.soldados;
+      p.cristais += p.magos;
+    }
 }
 
-jogador[recurso] -= qtdRecurso;
-attUI();
 
+
+//CHAMA PROXIMA RODADA
+function proximaRodada(){
+  verificarJogador();
+
+  currentPlayer = currentPlayer === 1 ? 2 : 1;
+  attUI();
 }
 
 
+//FAZER O BOT JOGAR
+function botJoga(){
+  document.querySelector('.campo__jogo__jogador__carta.selecionaveis').disabled = true;
 
-//Funções separadas para facilitar manutenção e leitura, mas poderia ser tudo em uma função só
+  currentPlayer = currentPlayer === 2 ? 1 : 2;
+  attUI();
+}
