@@ -627,17 +627,28 @@ function jogarCarta(img){
       return;
     })
   }else{
+  classeCampo.classList.add('naoclicavel');
+  divCarta.classList.add('naoclicavel');  
+
   document.getElementById('somflip').play();
   divCarta.classList.add('animar-carta');
+
   setTimeout(() =>{
     tocarSom(img);
   },1000);
+
   setTimeout(() =>{
+    aplicarEfeito(nomeCarta);
+    novaCarta(img);
+    verificaCusto();
+
   divCarta.classList.remove('animar-carta');
-  aplicarEfeito(nomeCarta);
-  novaCarta(img);
-  verificaCusto();
-  },2000);  
+  classeCampo.classList.remove('naoclicavel');
+  divCarta.classList.remove('naoclicavel');
+  },2500);  
+
+  proximaRodada();
+
 }
 }
 
@@ -775,6 +786,7 @@ function gangorraTudo(jogador,jogadorAlvo,efeito){
     efeito.alvo == 'magos' ?  jogadorAlvo[chave] = 1 : jogadorAlvo[chave] = 0
     };
   }
+  attUI();
 };
 
 
@@ -802,14 +814,18 @@ function proximaRodada(){
   verificarJogador();
 
   currentPlayer = currentPlayer === 1 ? 2 : 1;
+  botJoga();
   attUI();
 }
 
 
 //FAZER O BOT JOGAR
 function botJoga(){
-  document.querySelector('.campo__jogo__jogador__carta.selecionaveis').disabled = true;
-
   currentPlayer = currentPlayer === 2 ? 1 : 2;
+
+  const maoBot = document.querySelectorAll('.campo__jogo__jogador__carta.bot');
+  maoBot.remove();
+
+
   attUI();
 }
