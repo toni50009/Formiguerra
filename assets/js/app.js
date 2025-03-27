@@ -422,9 +422,9 @@ const players = {
   2: {
     castelo: 30,
     muro: 10,
-    tijolos: 0,
-    armas: 0,
-    cristais: 0,
+    tijolos: 5,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -573,6 +573,8 @@ function verificaCusto(){
   });
 }
 
+//PARA FAZER O MESMO COM O BOT
+
 
 
 
@@ -618,12 +620,12 @@ function jogarCarta(img){
       classeCampo.classList.remove('naoclicavel');
       attUI();
       verificaCusto();
+      proximaRodada();
     });
 
     document.getElementById('nao').addEventListener('click', () =>{
       divMensagem.remove();
       classeCampo.classList.remove('naoclicavel');
-      attUI();
       return;
     })
   }else{
@@ -643,11 +645,9 @@ function jogarCarta(img){
     verificaCusto();
 
   divCarta.classList.remove('animar-carta');
-  classeCampo.classList.remove('naoclicavel');
-  divCarta.classList.remove('naoclicavel');
-  },2500);  
-
   proximaRodada();
+},2500);  
+
 
 }
 }
@@ -763,13 +763,15 @@ function gangorra(jogador,jogadorAlvo,efeito){
   
   }else if(Array.isArray(efeito.alvo)){
     efeito.alvo.forEach(recurso =>{
-      if(jogadorAlvo[recurso] > 5){
+      if(jogadorAlvo[recurso] >= 5){
         jogador[recurso] += efeito.quantidade;
         jogadorAlvo[recurso] -= efeito.quantidade;
       }else if(jogadorAlvo[recurso] > 0 && jogadorAlvo[recurso] < 5){
         jogador[recurso] += jogadorAlvo[recurso];
         jogadorAlvo[recurso] = 0;
-      }});
+      }else{jogadorAlvo[recurso] = 0;
+      };
+    });
   }
   attUI();
 }
@@ -814,18 +816,62 @@ function proximaRodada(){
   verificarJogador();
 
   currentPlayer = currentPlayer === 1 ? 2 : 1;
-  botJoga();
+  if(currentPlayer == 2){
+    botJoga();
+  }
   attUI();
 }
 
 
 //FAZER O BOT JOGAR
 function botJoga(){
-  currentPlayer = currentPlayer === 2 ? 1 : 2;
+  currentPlayer = 2;
+  
 
   const maoBot = document.querySelectorAll('.campo__jogo__jogador__carta.bot');
-  maoBot.remove();
+  const bot = players[2];
 
+  //Desestruturação 
+  const jogaveis = Array.from(maoBot).filter(divCarta => {
+    const img = divCarta.querySelector('img');
+    const nomeCarta = img.dataset.nome;
+    const carta = cartas.find(c => c.nome === nomeCarta);
+    const { recurso, quantidade } = carta.custo;
+
+    return bot[recurso] >= quantidade;
+  });
+
+  if(jogaveis.length === 0){
+    const descartaveis = Array.from(maoBot);
+    const cartaDescartada = descartaveis[Math.floor(Math.random() * descartaveis.length)];
+    const img = cartaDescartada.querySelector('img');
+    jogarCarta(img);
+  }
+
+  //Escolhe aleatoriamente uma carta que o BOT tem recurso para jogar
+
+    const cartaEscolhida = jogaveis[Math.floor(Math.random(0) * jogaveis.length)];
+    const img = cartaEscolhida.querySelector('img');
+
+  //Inverte a animação e executa
+  document.getElementById('somflip').play();
+  cartaEscolhida.classList.add('animar-carta-bot');
+  cartaEscolhida.classList.add('naoclicavel');
+  novaCarta(img);
+
+  setTimeout(() => {
+    tocarSom(img);
+  }, 1000);
+
+  setTimeout(() => {
+    aplicarEfeito(img.dataset.nome);
+    verificaCusto();
+
+    cartaEscolhida.classList.remove('animar-carta-bot');
+  }, 2500);
+
+  cartaEscolhida.src = '/assets/img/molde.png';
 
   attUI();
 }
+
