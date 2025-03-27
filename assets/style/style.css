@@ -171,37 +171,37 @@ p{
 
 
 
-  .castle-bar-wrapper {
+  .castle-bar-wrapper{
     width: 100px;
     height: 20px;
     background-color: #ccc;
     border: 1px solid #333;
   }
-  .castle-bar {
+  .castle-bar{
     height: 100%;
     background-color: #3498db;
     width: 50%; /* atualizado por JS */
   }
 
 
-  #enemyCastleBar {
+  #enemyCastleBar{
     background-color: #e74c3c;
   }
 
-  @keyframes jogarCarta {
-    0% {
+  @keyframes jogarCarta{
+    0%{
       transform: translate(0, 0) scale(1);
       z-index: 10;
     }
-    30% {
+    30%{
       transform: translate(0, -6rem) scale(1.25);
       z-index: 10;
     }
-    70% {
+    70%{
       transform: translate(0, -6rem) scale(1.25);
       z-index: 10;
     }
-    100% {
+    100%{
       transform: translate(0, 0) scale(1);
       z-index: 1;
     }
@@ -209,37 +209,37 @@ p{
 
 
 @keyframes jogarBot {
-  0% {
+  0%{
     transform: translate(0, 0) scale(1);
     z-index: 10;
   }
-  30% {
+  30%{
     transform: translate(0, 6rem) scale(1.25);
     z-index: 10;
   }
-  70% {
+  70%{
     transform: translate(0, 6rem) scale(1.25);
     z-index: 10;
   }
-  100% {
+  100%{
     transform: translate(0, 0) scale(1);
     z-index: 1;
   }
 }
 
 
-  .animar-carta {
-    animation: jogarCarta 3s ease-in-out;
+  .animar-carta{
+    animation: jogarCarta 2.5s ease-in-out;
   }
 
-  .animar-carta.descartada::after {
+  .animar-carta.descartada::after{
     content: "Descartada";
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgb(0, 0, 0);
     padding: 0.3rem 0.6rem;
     border-radius: 6px;
     font-weight: bold;
@@ -248,45 +248,60 @@ p{
     pointer-events: none;
   }
 
-.animar-carta.descartada::after {
-  content: "Descartada";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
-  background-color: rgba(0,0,0,0.6);
-  padding: 0.3rem 0.6rem;
-  border-radius: 6px;
-  font-weight: bold;
-  font-size: 1rem;
-  z-index: 10;
-  pointer-events: none;
-}
 
-
-
-  .animar-carta-bot {
-    animation: jogarBot 3s ease-in-out;
+  .animar-carta-bot{
+    animation: jogarBot 2.5s ease-in-out;
   }
 
   .animar-carta-bot.descartada::after{
-    position: absolute;
     content: "Descartada";
-    transform: translate(-50%,-50%);
+    position: absolute;
     top: 50%;
     left: 50%;
-    color:#ccc;
-    font-weight: bolder;
-    font-size: larger;
-    white-space: nowrap;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background-color: rgb(0, 0, 0);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
     z-index: 10;
+    pointer-events: none;
   }
   
   
-  .jogador-ativo {
+  .jogador-ativo{
     box-shadow: 0.4rem 0.4rem 0.5rem 0 rgba(0, 255, 0, 0.6);
     transition: box-shadow 0.3s ease-in-out;
     position: relative;
   }
 
+
+  .invisivel{
+    display: none;
+  }
+
+  .tela-final {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.9);
+    color: white;
+    padding: 3rem;
+    border-radius: 12px;
+    text-align: center;
+    z-index: 9999;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  
+  .tela-final button {
+    margin-top: 2rem;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #28a745;
+    color: white;
+    cursor: pointer;
+  }

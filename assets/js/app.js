@@ -413,18 +413,18 @@ const players = {
     castelo: 30,
     muro: 10,
     tijolos: 5,
-    armas: 10,
-    cristais: 60,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
   },
   2: {
-    castelo: 30,
-    muro: 10,
-    tijolos: 0,
-    armas: 0,
-    cristais: 0,
+    castelo: 1,
+    muro: 0,
+    tijolos: 5,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -502,6 +502,8 @@ function tocarSom(img){
 
 //ATUALIZAR DADOS INTERFACE
 function attUI(){
+
+
   for(let i = 1; i <= 2; i++){
     document.getElementById(`p${i}-castelo`).textContent = players[i].castelo;
     document.getElementById(`p${i}-muro`).textContent = players[i].muro;
@@ -530,19 +532,15 @@ document.getElementById('enemyWallBar').style.width = percentEnemyWall + '%';
 
 //DESABILITAR SELECAO 
 function desabilitarSelecao(){
-  const cartasJogador1 = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
-  cartasJogador1.forEach(carta => {
-    carta.classList.add('naoclicavel');
-  });
+  const classeCampo = document.querySelector('.campo__jogo');
+  classeCampo.classList.add('naoclicavel');
 }
 
 
 //HABILITAR NOVAMENTE
 function habilitarSelecao(){
-  const cartasJogador1 = document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis');
-  cartasJogador1.forEach(carta => {
-    carta.classList.remove('naoclicavel');
-  });
+  const classeCampo = document.querySelector('.campo__jogo');
+  classeCampo.classList.remove('naoclicavel');
 }
 
 
@@ -590,6 +588,7 @@ verificaCusto();
 attUI();
 
 
+
 // EFEITO DA CARTA E RODAR NOVA CARTA
 function jogarCarta(img){
 
@@ -610,7 +609,7 @@ function jogarCarta(img){
     <button id="nao">Não</button>
     `; 
     classeCampo.appendChild(divMensagem);
-    classeCampo.classList.add('naoclicavel');
+    desabilitarSelecao();
 
     document.getElementById('sim').addEventListener('click', () =>{
       const p = players[currentPlayer];
@@ -628,11 +627,10 @@ function jogarCarta(img){
         divCarta.classList.remove('descartada');
         divCarta.classList.remove('animar-carta');
         divCarta.classList.remove('descartavel');
-        divCarta.classList.add('naoclicavel');
         proximaRodada();
         attUI();
         verificaCusto();
-      }, 3000);
+      }, 2500);
 
     });
 
@@ -657,7 +655,7 @@ function jogarCarta(img){
 
   divCarta.classList.remove('animar-carta');
   proximaRodada();
-},3000);  
+},2500);  
 
 
 }
@@ -688,6 +686,7 @@ jogador[recurso] -= qtdRecurso;
 checarNegativo(jogador,recurso);
 
 attUI();
+checarCondicaoVitoria();
 }
 
 
@@ -813,17 +812,17 @@ function gangorraTudo(jogador,jogadorAlvo,efeito){
 
 //VERIFICAR QUAL JOGADOR RECEBE RECURSOS AO FINAL DA RODADA
 function verificarJogador(){
- if(currentPlayer === 1){
-   const p = players[2];
-   p.tijolos += p.construtores;
-   p.armas += p.soldados;
-   p.cristais += p.magos;
-   }else{
-     const p = players[1];
-     p.tijolos += p.construtores;
-     p.armas += p.soldados;
-     p.cristais += p.magos;
-   }
+  if(currentPlayer === 1){
+    const p = players[2];
+    p.tijolos += p.construtores;
+    p.armas += p.soldados;
+    p.cristais += p.magos;
+    }else{
+      const p = players[1];
+      p.tijolos += p.construtores;
+      p.armas += p.soldados;
+      p.cristais += p.magos;
+    }
 }
 
 
@@ -833,6 +832,9 @@ function verificarJogador(){
 //CHAMA PROXIMA RODADA
 function proximaRodada(){
 
+  if(checarCondicaoVitoria() == true){
+    return;
+  }
 
   verificarJogador();
   currentPlayer = currentPlayer === 1 ? 2 : 1;
@@ -844,8 +846,6 @@ function proximaRodada(){
   if(currentPlayer === 2){
     botJoga();
   }
-    const classeCampo = document.querySelector('.campo__jogo');
-    classeCampo.classList.remove('naoclicavel');
   attUI();
 }
 
@@ -856,10 +856,10 @@ function proximaRodada(){
 
 //FAZER O BOT JOGAR
 function botJoga(){
+
   const jogaveis = [];
 
   
-
   const maoBot = document.querySelectorAll('.campo__jogo__jogador__carta.bot');
   const bot = players[currentPlayer];
 
@@ -884,18 +884,17 @@ function botJoga(){
   if(jogaveis.length === 0){
     const descartaveis = Array.from(maoBot);
     const cartaDescartada = descartaveis[Math.floor(Math.random() * descartaveis.length)];
+    document.getElementById('somflip').play();
     cartaDescartada.classList.add('animar-carta-bot');
     cartaDescartada.classList.add('descartada');
     desabilitarSelecao();
-    document.getElementById('somflip').play();
     setTimeout(() => {
       cartaDescartada.classList.remove('animar-carta-bot');
       cartaDescartada.classList.remove('descartada');
-    }, 3000)
-
-    attUI();
-    proximaRodada();
-    return;
+      attUI();
+      proximaRodada();
+      return;
+    }, 2500)
   }
 
     //Escolhe aleatoriamente uma carta que o BOT tem recurso para jogar
@@ -908,7 +907,7 @@ function botJoga(){
   //Inverte a animação e executa
   document.getElementById('somflip').play();
   cartaEscolhida.classList.add('animar-carta-bot');
-  cartaEscolhida.classList.add('naoclicavel');
+  desabilitarSelecao();
 
 
   setTimeout(() => {
@@ -924,10 +923,85 @@ function botJoga(){
     imgEscolhida.removeAttribute("onclick");
     cartaEscolhida.classList.remove('animar-carta-bot');
     proximaRodada();
-  }, 3000);
-
-
+  }, 2500);
 
   attUI();
+}
 
+
+
+//CONDICOES DE VITORIA E DERROTA
+
+function vencer(){
+  mostrarMensagemFinal('Você venceu!');
+}
+
+
+function perder(){
+mostrarMensagemFinal('Você perdeu!');
+}
+
+
+function checarCondicaoVitoria(){
+  if(players[1].castelo <= 0 || players[2].castelo >= 100){
+    perder();
+    return true;
+  }
+
+  if(players[2].castelo <= 0 || players[1].castelo >= 100){
+    vencer();
+    return true;
+  }
+}
+
+
+function mostrarMensagemFinal(texto) {
+  const tela = document.getElementById("tela-final");
+  const msg = document.getElementById("mensagem-final");
+
+  msg.textContent = texto;
+  tela.classList.remove("invisivel");
+  desabilitarSelecao();
+}
+
+
+//REINICIAR
+function reiniciarJogo() {
+
+  players[1] = {
+    castelo: 30,
+    muro: 10,
+    tijolos: 15,
+    armas: 40,
+    cristais: 60,
+    construtores: 2,
+    soldados: 2,
+    magos: 2
+  };
+  players[2] = {
+    castelo: 30,
+    muro: 10,
+    tijolos: 0,
+    armas: 0,
+    cristais: 0,
+    construtores: 2,
+    soldados: 2,
+    magos: 2
+  };
+
+
+  document.querySelectorAll('.campo__jogo__jogador__carta').forEach(div => {
+    div.innerHTML = '';
+    div.classList.remove('naoclicavel', 'descartada', 'desabilitada', 'descartavel');
+  });
+
+  currentPlayer = 1;
+  escolherCarta();
+  // Atualiza UI
+  attUI();
+  verificaCusto();
+  habilitarSelecao();
+
+  document.getElementById("tela-final").classList.add("invisivel");
+  document.querySelector('.campo__jogo').classList.remove('naoclicavel');
 }
