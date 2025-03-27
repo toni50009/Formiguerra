@@ -138,9 +138,6 @@ p{
     transition: transform 0.2s ease, border 0.2s ease;
   }
 
-  .campo__jogo__jogador__carta.jogada{
-    transform: translateY(-3rem);
-  }
 
   
   .campo__jogo__jogador__carta.selecionaveis.desabilitada:hover::after {
@@ -196,8 +193,12 @@ p{
       transform: translate(0, 0) scale(1);
       z-index: 10;
     }
-    50% {
-      transform: translate(0, -10rem) scale(1.2);
+    30% {
+      transform: translate(0, -6rem) scale(1.25);
+      z-index: 10;
+    }
+    70% {
+      transform: translate(0, -6rem) scale(1.25);
       z-index: 10;
     }
     100% {
@@ -206,28 +207,80 @@ p{
     }
   }
 
-  @keyframes jogarBot {
-    0% {
-      transform: translate(0, 0) scale(1);
-      z-index: 10;
-    }
-    50% {
-      transform: translate(0, 10rem) scale(1.2);
-      z-index: 10;
-    }
-    100% {
-      transform: translate(0, 0) scale(1);
-      z-index: 1;
-    }
+
+@keyframes jogarBot {
+  0% {
+    transform: translate(0, 0) scale(1);
+    z-index: 10;
   }
+  30% {
+    transform: translate(0, 6rem) scale(1.25);
+    z-index: 10;
+  }
+  70% {
+    transform: translate(0, 6rem) scale(1.25);
+    z-index: 10;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    z-index: 1;
+  }
+}
 
 
   .animar-carta {
-    animation: jogarCarta 2.5s ease-in-out;
+    animation: jogarCarta 3s ease-in-out;
   }
 
+  .animar-carta.descartada::after {
+    content: "Descartada";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    background-color: rgba(0,0,0,0.6);
+    padding: 0.3rem 0.6rem;
+    border-radius: 6px;
+    font-weight: bold;
+    font-size: 1rem;
+    z-index: 20;
+    pointer-events: none;
+  }
+
+.animar-carta.descartada::after {
+  content: "Descartada";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  background-color: rgba(0,0,0,0.6);
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 1rem;
+  z-index: 10;
+  pointer-events: none;
+}
+
+
+
   .animar-carta-bot {
-    animation: jogarBot 2.5s ease-in-out;
+    animation: jogarBot 3s ease-in-out;
+  }
+
+  .animar-carta-bot.descartada::after{
+    position: absolute;
+    content: "Descartada";
+    transform: translate(-50%,-50%);
+    top: 50%;
+    left: 50%;
+    color:#ccc;
+    font-weight: bolder;
+    font-size: larger;
+    white-space: nowrap;
+    z-index: 10;
   }
   
   
