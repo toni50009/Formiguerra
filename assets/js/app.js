@@ -859,7 +859,6 @@ function proximaRodada(){
 
 //FAZER O BOT JOGAR
 function botJoga(){
-  document.querySelector('.info.p1').classList.remove('jogador-ativo');
   const jogaveis = [];
 
   
