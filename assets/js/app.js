@@ -492,6 +492,10 @@ function tocarSom(img){
     case 'gangorra':
       document.getElementById("somgangorra").play();
       break;
+
+      case 'gangorratudo':
+        document.getElementById("sommaldicao").play();
+        break;
   
     case 'remover':
       document.getElementById("somremover").play();
@@ -646,6 +650,7 @@ function jogarCarta(img){
   desabilitarSelecao();
   setTimeout(() =>{
     tocarSom(img);
+    attUI();
   },1000);
 
   setTimeout(() =>{
@@ -674,10 +679,8 @@ function aplicarEfeito(nomeCarta){
   const jogador = players[currentPlayer];
   const jogadorAlvo = players[njogadorAlvo];
   const efeito = carta.efeito;
-  const custo = carta.custo;
   const recurso = carta.custo.recurso;
   const qtdRecurso = carta.custo.quantidade;
-  const recursoJogador = jogador[recurso];
 
   checarDados(jogador,efeito,jogadorAlvo);
 
@@ -856,7 +859,7 @@ function proximaRodada(){
 
 //FAZER O BOT JOGAR
 function botJoga(){
-
+  document.querySelector('.info.p1').classList.remove('jogador-ativo');
   const jogaveis = [];
 
   
@@ -1007,3 +1010,4 @@ function reiniciarJogo() {
   document.getElementById("tela-final").classList.add("invisivel");
   document.querySelector('.campo__jogo').classList.remove('naoclicavel');
 }
+

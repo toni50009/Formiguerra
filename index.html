@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel = "stylesheet" href="/assets/style/style.css">
   <audio id="somadicionar" src="/assets/effects/adicionar.mp3" preload="auto"></audio>
-  <audio id="somremover" src="/assets/effects/remover.m4a" preload="auto"></audio>
-  <audio id="somgangorra" src="/assets/effects/gangorra.m4a" preload="auto"></audio>
-  <audio id="somdano" src="/assets/effects/dano.m4a" preload="auto"></audio>
+  <audio id="sommaldicao" src="/assets/effects/maldicao.mp3" preload="auto"></audio>
+  <audio id="somremover" src="/assets/effects/remover.mp3" preload="auto"></audio>
+  <audio id="somgangorra" src="/assets/effects/gangorra.mp3" preload="auto"></audio>
+  <audio id="somdano" src="/assets/effects/dano.mp3" preload="auto"></audio>
   <audio id="somflip" src="/assets/effects/flip.mp3" preload="auto"></audio>
   <audio id="somcastelo" src="/assets/effects/castelo.mp3" preload="auto"></audio>
   <title>Formiguerra</title>
@@ -22,28 +23,28 @@
             <h1>Jogador</h1>
           </div>
           <div class="player__info jogador" id="p1-status">
-            <p>🏰Castelo: <span id="p1-castelo">30</span></p>
+            <p>🏰Castelo: <span id="p1-castelo" class="numero">30</span></p>
             <div class="castle-bar-wrapper">
               <div class="castle-bar" id="playerCastleBar"></div>
             </div>
-            <p>🏯Muro: <span id="p1-muro">10</span></p>
+            <p>🏯Muro: <span id="p1-muro" class="numero">10</span></p>
             <div class="castle-bar-wrapper">
               <div class="castle-bar" id="playerWallBar"></div>
             </div>
           </div>
 
-      <div class="info jogador-ativo">
+      <div class="info">
         <div class="player__info">
-          <p>🧱Tijolos: <span id="p1-tijolos">5</span></p>
-          <p>🛠️Construtores: <span id="p1-construtores">2</span></p>
+          <p>🧱Tijolos: <span id="p1-tijolos" class="numero">5</span></p>
+          <p>🛠️Construtores: <span id="p1-construtores" class="numero">2</span></p>
         </div>
         <div class="player__info">
-          <p>⚔️Armas: <span id="p1-armas">5</span></p>
-          <p>🛡️Soldados: <span id="p1-soldados">2</span></p>
+          <p>⚔️Armas: <span id="p1-armas" class="numero">5</span></p>
+          <p>🛡️Soldados: <span id="p1-soldados" class="numero">2</span></p>
         </div>
           <div class="player__info">
-            <p>💎Cristais: <span id="p1-cristais">5</span></p>
-            <p>🧙Magos: <span id="p1-magos">2</span></p>
+            <p>💎Cristais: <span id="p1-cristais" class="numero">5</span></p>
+            <p>🧙Magos: <span id="p1-magos" class="numero">2</span></p>
           </div>
         </div>  
       </div>
@@ -105,11 +106,11 @@
             <h1>Bot</h1>
           </div>
           <div class="player__info p2" id="p2-status">
-            <p>🏰Castelo: <span id="p2-castelo">30</span></p>
+            <p>🏰Castelo: <span id="p2-castelo" class="numero">30</span></p>
             <div class="castle-bar-wrapper">
               <div class="castle-bar" id="enemyCastleBar"></div>
             </div>
-            <p>🏯Muro: <span id="p2-muro">10</span></p>
+            <p>🏯Muro: <span id="p2-muro" class="numero">10</span></p>
             <div class="castle-bar-wrapper">
               <div class="castle-bar" id="enemyWallBar"></div>
             </div>
@@ -118,16 +119,16 @@
 
         <div class="info p2">
           <div class="player__info p2" id="p2-recursos">
-            <p>🧱Tijolos: <span id="p2-tijolos">5</span></p>
+            <p>🧱Tijolos: <span id="p2-tijolos" class="numero">5</span></p>
             <p>🛠️Construtores: <span id="p2-construtores">2</span></p>
           </div>
           <div class="player__info p2" id="p2-recursos">
-            <p>⚔️Armas: <span id="p2-armas">5</span></p>
-            <p>🛡️Soldados: <span id="p2-soldados">2</span></p>
+            <p>⚔️Armas: <span id="p2-armas" class="numero">5</span></p>
+            <p>🛡️Soldados: <span id="p2-soldados" class="numero">2</span></p>
           </div>
           <div class="player__info p2" id="p2-recursos">
-            <p>💎Cristais: <span id="p2-cristais">5</span></p>
-            <p>🧙Magos: <span id="p2-magos">2</span></p>
+            <p>💎Cristais: <span id="p2-cristais" class="numero">5</span></p>
+            <p>🧙Magos: <span id="p2-magos" class="numero">2</span></p>
           </div>
         </div>
       </div>  
