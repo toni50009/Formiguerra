@@ -13,14 +13,15 @@
   <title>Formiguerra</title>
 </head>
 <body>
-  <div class="campo">  
 
+  <div class="campo">  
     <div class="player__area p1">
       <div class="status">
         <div class="player p1 jogador-ativo" id="player1">
-          <h1>Jogador 1(Você)</h1>
+          <div class="titulo p1">
+            <h1>Jogador</h1>
+          </div>
           <div class="player__info jogador" id="p1-status">
-            <h2>Status:</h2>
             <p>🏰Castelo: <span id="p1-castelo">30</span></p>
             <div class="castle-bar-wrapper">
               <div class="castle-bar" id="playerCastleBar"></div>
@@ -30,24 +31,22 @@
               <div class="castle-bar" id="playerWallBar"></div>
             </div>
           </div>
-      </div>
-      <div class="info jogador-ativo">
-        <div class="player__info" id="p1-recursos">
-          <h2>Recursos:</h2>
-          <p>🧱Tijolos: <span id="p1-tijolos">5</span></p>
-          <p>⚔️Armas: <span id="p1-armas">5</span></p>
-          <p>💎Cristais: <span id="p1-cristais">5</span></p>
-        </div>
-      </div>
 
-        <div class="info__fornecedores jogador-ativo">
-          <div class="player__info__fornecedores" id="p1-fornecedores">
-            <h2>Fornecedores:</h2>
-            <p>🛠️Construtores: <span id="p1-construtores">2</span></p>
-            <p>🛡️Soldados: <span id="p1-soldados">2</span></p>
+      <div class="info jogador-ativo">
+        <div class="player__info">
+          <p>🧱Tijolos: <span id="p1-tijolos">5</span></p>
+          <p>🛠️Construtores: <span id="p1-construtores">2</span></p>
+        </div>
+        <div class="player__info">
+          <p>⚔️Armas: <span id="p1-armas">5</span></p>
+          <p>🛡️Soldados: <span id="p1-soldados">2</span></p>
+        </div>
+          <div class="player__info">
+            <p>💎Cristais: <span id="p1-cristais">5</span></p>
             <p>🧙Magos: <span id="p1-magos">2</span></p>
           </div>
-        </div>
+        </div>  
+      </div>
       </div>
     </div>
 
@@ -67,16 +66,20 @@
           </div>
           <div class="campo__jogo__jogador__carta naoclicavel bot">
           </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
         </div>
       </div>
 
       <div id="tela-final" class="tela-final invisivel">
         <h1 id="mensagem-final"></h1>
-        <button onclick="reiniciarJogo()">Reiniciar</button>
+        <button class="button" id="botao" onclick="reiniciarJogo()">Reiniciar</button>
       </div>
 
       <div class="campo__cartas jogador">
         <div class="campo__jogo__jogador p1" id="p1-cartas">
+          <div class="campo__jogo__jogador__carta selecionaveis">
+          </div>
           <div class="campo__jogo__jogador__carta selecionaveis">
           </div>
           <div class="campo__jogo__jogador__carta selecionaveis">
@@ -98,9 +101,10 @@
     <div class="player__area p2">
       <div class="status p2">
         <div class="player p2" id="player2">
-          <h1>Jogador 2(Bot)</h1>
-          <div class="player__info" id="p2-status">
-            <h2>Status:</h2>
+          <div class="titulo p2">
+            <h1>Bot</h1>
+          </div>
+          <div class="player__info p2" id="p2-status">
             <p>🏰Castelo: <span id="p2-castelo">30</span></p>
             <div class="castle-bar-wrapper">
               <div class="castle-bar" id="enemyCastleBar"></div>
@@ -110,28 +114,23 @@
               <div class="castle-bar" id="enemyWallBar"></div>
             </div>
           </div>
-        </div>
-      </div>
+
 
         <div class="info p2">
           <div class="player__info p2" id="p2-recursos">
-            <h2>Recursos:</h2>
             <p>🧱Tijolos: <span id="p2-tijolos">5</span></p>
-            <p>⚔️Armas: <span id="p2-armas">5</span></p>
-            <p>💎Cristais: <span id="p2-cristais">5</span></p>
-          </div>
-        </div>  
-
-        <div class="info__fornecedores p2">
-          <div class="player__info__fornecedores p2" id="p2-fornecedores">
-            <h2>Fornecedores:</h2>
             <p>🛠️Construtores: <span id="p2-construtores">2</span></p>
+          </div>
+          <div class="player__info p2" id="p2-recursos">
+            <p>⚔️Armas: <span id="p2-armas">5</span></p>
             <p>🛡️Soldados: <span id="p2-soldados">2</span></p>
+          </div>
+          <div class="player__info p2" id="p2-recursos">
+            <p>💎Cristais: <span id="p2-cristais">5</span></p>
             <p>🧙Magos: <span id="p2-magos">2</span></p>
           </div>
         </div>
-
-      </div>
+      </div>  
     </div>
   </div>
 </div>

@@ -420,8 +420,8 @@ const players = {
     magos: 2
   },
   2: {
-    castelo: 1,
-    muro: 0,
+    castelo: 30,
+    muro: 10,
     tijolos: 5,
     armas: 5,
     cristais: 5,
@@ -956,24 +956,26 @@ function checarCondicaoVitoria(){
 
 
 function mostrarMensagemFinal(texto) {
+  habilitarSelecao();
   const tela = document.getElementById("tela-final");
   const msg = document.getElementById("mensagem-final");
 
   msg.textContent = texto;
   tela.classList.remove("invisivel");
-  desabilitarSelecao();
+  document.querySelector('.campo__cartas.jogador').classList.add('naoclicavel');
 }
 
 
 //REINICIAR
 function reiniciarJogo() {
+  document.querySelector('.campo__cartas.jogador').classList.remove('naoclicavel');
 
   players[1] = {
     castelo: 30,
     muro: 10,
-    tijolos: 15,
-    armas: 40,
-    cristais: 60,
+    tijolos: 5,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -981,9 +983,9 @@ function reiniciarJogo() {
   players[2] = {
     castelo: 30,
     muro: 10,
-    tijolos: 0,
-    armas: 0,
-    cristais: 0,
+    tijolos: 5,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
