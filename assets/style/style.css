@@ -10,9 +10,14 @@ body{
   display: flex;
   text-align: center;
   justify-content: center;
+  width: auto;
   color: #ccc;
   text-decoration: none;
   font-size: xx-large;
+}
+
+.textoIniciar:hover{
+  color: #0bca44;
 }
 
 p{
@@ -24,6 +29,8 @@ p{
   width: 100%;
   height: 100vh;
 }
+
+
 
 .naoclicavel{
   pointer-events: none;
@@ -101,7 +108,9 @@ p{
     width: 100%;
     height: 100vh;
     line-height: 2rem;
+    padding: 1rem;
     background-color: #333;
+    border: 4px solid #0bca44;
   }
 
   .campo__cartas{
@@ -308,7 +317,7 @@ p{
     box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
   }
   
-  .tela-final button {
+  .button {
     margin-top: 2rem;
     padding: 1rem 2rem;
     font-size: 1.1rem;
