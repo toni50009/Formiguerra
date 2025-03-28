@@ -550,7 +550,6 @@ function habilitarSelecao(){
 
 //ADICIONA A CLASSE DESABILITADA SE NAO TIVER RECURSOS
 function verificaCusto(){
-  console.log(`Verificar custo, current: ${currentPlayer}`);
   const maoJogador = currentPlayer === 1? 
   document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis'):
   document.querySelectorAll('.campo__jogo__jogador__carta.bot');
@@ -671,7 +670,6 @@ function jogarCarta(img){
 
 // CHAMADA SEMPRE QUE UMA SELECIONAVEL FOR CLICADA
 function aplicarEfeito(nomeCarta){
-  console.log('[aplicarEfeito]', nomeCarta, 'currentPlayer:', currentPlayer);
   const carta = cartas.find(c => c.nome === nomeCarta);
  
   let njogadorAlvo = currentPlayer === 1 ? 2 : 1;
@@ -875,7 +873,6 @@ function botJoga(){
     const custo = carta.custo;
     const recurso = custo.recurso;
     const quantidade = custo.quantidade;
-    console.log(bot[recurso],quantidade);
     if (bot[recurso] >= quantidade) {
       jogaveis.push(divCarta);
     }
