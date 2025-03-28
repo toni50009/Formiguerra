@@ -578,7 +578,6 @@ function verificaCusto(){
 
 //JOGO COMEÇA AQUI
 escolherCarta();
-verificaCusto();
 attUI();
 
 
@@ -608,12 +607,15 @@ function jogarCarta(img){
       const p = players[currentPlayer];
       document.getElementById('somflip').play();
 
-
       p[recurso] += 1;
 
       divCarta.classList.add('animar-carta');
       divCarta.classList.add('descartada');
       divMensagem.remove();
+
+      setTimeout(() =>{
+        attUI();
+      }, 1000)
 
       setTimeout(() => {
         novaCarta(img);
@@ -622,7 +624,6 @@ function jogarCarta(img){
         divCarta.classList.remove('descartavel');
         proximaRodada();
         attUI();
-        verificaCusto();
       }, 2500);
 
     });
@@ -633,28 +634,30 @@ function jogarCarta(img){
       return;
     })
   }else{
- 
+
+  desabilitarSelecao();
   document.getElementById('somflip').play();
   divCarta.classList.add('animar-carta');
-  desabilitarSelecao();
+
   setTimeout(() =>{
     tocarSom(img);
     attUI();
   },1000);
 
   setTimeout(() =>{
-    aplicarEfeito(nomeCarta);
     novaCarta(img);
-    verificaCusto();
-
-  divCarta.classList.remove('animar-carta');
-  proximaRodada();
+    divCarta.classList.remove('animar-carta');
+    attUI();
+    proximaRodada();
 },2500);  
+aplicarEfeito(nomeCarta);
 
 
 }
 }
 
+
+//AUXILIAR
 
 
 
