@@ -22,8 +22,8 @@ p{
   align-self: center;
   width: 50%;
   top: 50%;
-  background-color: rgba(53, 34, 0, 0.853);
-  padding: 20px;
+  background-color: rgba(40, 34, 22, 0.972);
+  padding: 35px;
   border-radius: 10px;
   pointer-events: auto;
 }
@@ -232,6 +232,9 @@ p{
   }
 }
 
+.descartavel.p1{
+  opacity: 0.5;
+}
 
   .animar-carta{
     animation: jogarCarta 2.5s ease-in-out;
