@@ -60,15 +60,49 @@
       </div>
     </div>
 
-    <div class="campo__jogo inicio">
-      <h1>Formiguerra é um jogo de cartas onde o objetivo é deixar o castelo inimigo com menos de 100 de vida,
-        ou fazer o seu castelo chegar a 100. O Bot poderá ganhar também. <br><br>
-        A cada turno que se inicia, é somado aos Recursos(🧱 Tijolos, ⚔️Armas e💎) ,do jogador que está na vez,
-        os valores dos Fornecedores (🛠️Construtores, 🛡️Soldados, 🧙Magos).<br><br>
-        Os Recursos são utilizados para poder jogar as cartas, MAS se você clicar em uma carta sem ter Recursos Suficiente,
-        você pode DESCARTAR a carta e receber 1 de Recurso do custo desta carta.<br><br>
-        <a href="/inicial.html" class="textoIniciar">Clique Aqui para Iniciar!</a>
-      </h1>
+    <div class="campo__jogo">
+      <div class="campo__cartas bot">
+        <div class="campo__jogo__jogador" id="p2-cartas">
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot">
+          </div>
+        </div>
+      </div>
+
+      <div id="tela-final" class="tela-final invisivel">
+        <h1 id="mensagem-final"></h1>
+        <button class="button" id="botao" onclick="reiniciarJogo()">Reiniciar</button>
+      </div>
+
+      <div class="campo__cartas jogador">
+        <div class="campo__jogo__jogador p1" id="p1-cartas">
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1">
+          </div>
+        </div>
+      </div> 
     </div>
 
 

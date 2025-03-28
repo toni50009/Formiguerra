@@ -1,15 +1,29 @@
 body{
-    font-family: Arial, sans-serif;
+    font-family:monospace;
     background-color: #f4f4dc;
     margin: 0;
     color: #ccc;
+    line-height: 0.5rem;
+}
+
+.textoIniciar{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  color: #ccc;
+  text-decoration: none;
+  font-size: xx-large;
 }
 
 p{
   font-weight: bold;
 }
 
-
+.campo__tutorial{
+  background-color: #333;
+  width: 100%;
+  height: 100vh;
+}
 
 .naoclicavel{
   pointer-events: none;
@@ -26,6 +40,7 @@ p{
   padding: 35px;
   border-radius: 10px;
   pointer-events: auto;
+  font-size: larger;
 }
 
 
@@ -53,14 +68,12 @@ p{
   .player__area{
     display: flex;
     flex-direction: column;
-    font-size: large;
-    width: 14vw;
+    font-size: 1.2rem;
+    width: 16vw;
 }
 
-
-
 .player__info{
-  padding: 0.2rem;
+  padding: 0.1rem;
 }
 
 
@@ -84,21 +97,19 @@ p{
     box-sizing: border-box;
   }
 
+  .campo__jogo.inicio{
+    width: 100%;
+    height: 100vh;
+    line-height: 2rem;
+    background-color: #333;
+  }
+
   .campo__cartas{
     justify-content: center;
     width: 100%;
     display: flex;
   }
 
-
-  .campo__cartas.bot {
-    margin-bottom: 1.5vh;
-  }
-
-  .campo__cartas.jogador{
-    margin-top: 1.5vh;
-  }
-  
 
   .campo__jogo__jogador {
     display: flex;
@@ -308,10 +319,6 @@ p{
     cursor: pointer;
   }
 
-
-  .numero{
-    font-size: larger;
-  }
 
   @keyframes brilho-sutil {
     0% {

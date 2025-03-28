@@ -435,14 +435,6 @@ const players = {
 let currentPlayer = 1;
 
 
-//HIGHLIGHT EM QUEM ESTÁ JOGANDO
-function adicionaCor(){
-  if(currentPlayer === 1){
-    document.querySelector('.player.p1').classList.add('vez');
-  }
-}
-
-
 //ESCOLHER CADA CARTA ALEATORIAMENTE
 function escolherCarta(){
 
@@ -585,7 +577,6 @@ function verificaCusto(){
 
 
 //JOGO COMEÇA AQUI
-adicionaCor();
 escolherCarta();
 verificaCusto();
 attUI();
@@ -594,7 +585,6 @@ attUI();
 
 // EFEITO DA CARTA E RODAR NOVA CARTA
 function jogarCarta(img){
-
 
   const nomeCarta = img.dataset.nome;
   const divCarta = img.parentElement;
