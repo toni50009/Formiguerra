@@ -412,9 +412,9 @@ const players = {
   1: {
     castelo: 30,
     muro: 10,
-    tijolos: 30,
-    armas: 30,
-    cristais: 30,
+    tijolos: 5,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -422,9 +422,9 @@ const players = {
   2: {
     castelo: 30,
     muro: 10,
-    tijolos: 0,
-    armas: 0,
-    cristais: 0,
+    tijolos: 5,
+    armas: 5,
+    cristais: 5,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -540,7 +540,7 @@ function habilitarSelecao(){
 
 
 //ADICIONA A CLASSE DESABILITADA SE NAO TIVER RECURSOS
-function verificaCusto(){
+function verificarCusto(){
   const maoJogador = currentPlayer === 1? 
   document.querySelectorAll('.campo__jogo__jogador__carta.selecionaveis'):
   document.querySelectorAll('.campo__jogo__jogador__carta.bot');
@@ -578,7 +578,7 @@ function verificaCusto(){
 //JOGO COMEÇA AQUI
 escolherCarta();
 attUI();
-verificaCusto();
+verificarCusto();
 comecarVez();
 
 
@@ -588,13 +588,23 @@ comecarVez();
 function comecarVez(){
   const textBox = document.createElement('div');
   const pai = document.querySelector('.campo__jogo');
-  
+
   textBox.className = 'txtBox';
   textBox.textContent = 'Sua Vez';
   pai.appendChild(textBox);
+  desabilitarSelecao();
 
   if(currentPlayer === 1){
-
+    document.getElementById('p1-tijolos').classList.add('brilho-animado');
+    document.getElementById('p1-armas').classList.add('brilho-animado');
+    document.getElementById('p1-cristais').classList.add('brilho-animado');
+    setTimeout(() =>{
+      document.getElementById('p1-tijolos').classList.remove('brilho-animado');
+      document.getElementById('p1-armas').classList.remove('brilho-animado');
+      document.getElementById('p1-cristais').classList.remove('brilho-animado');
+      textBox.remove();
+      habilitarSelecao();
+    },1000);
   }
 }
 
@@ -633,6 +643,8 @@ function jogarCarta(img){
       divMensagem.remove();
 
       setTimeout(() =>{
+        document.getElementById("somdescartar").play();
+        animarCampoAdicionar(`${recurso}`);
         attUI();
       }, 1000)
 
@@ -640,7 +652,7 @@ function jogarCarta(img){
         divCarta.classList.remove('descartada');
         divCarta.classList.remove('animar-carta');
         novaCarta(img);
-        verificaCusto();
+        verificarCusto();
         proximaRodada();
       }, 2500);
 
@@ -666,7 +678,7 @@ function jogarCarta(img){
   setTimeout(() =>{
     divCarta.classList.remove('animar-carta');
     novaCarta(img);
-    verificaCusto();
+    verificarCusto();
     proximaRodada();
 },2500);  
 }
@@ -693,8 +705,10 @@ function aplicarEfeito(nomeCarta){
   checarDados(jogador,efeito,jogadorAlvo);
 
   jogador[recurso] -= qtdRecurso;
+  if(typeof efeito.alvo === 'string' && efeito.alvo != 'cristais' || efeito.tipo === 'remover'){
+    animarCampoRecursoPerdido(recurso);
+  }
   checarNegativo(jogador,recurso);
-  verificarRecurso(efeito);
   attUI();
   checarCondicaoVitoria();
 }
@@ -735,6 +749,7 @@ function checarNegativo(jogadorAlvo,coisa){
 //FUNCOES DE EFEITOS DAS CARTAS
 function adicionar(jogador, efeito){
   jogador[efeito.alvo] += efeito.quantidade;
+  animarCampoAdicionar(efeito.alvo);
   attUI();
 }
 
@@ -745,15 +760,18 @@ function dano(jogadorAlvo, efeito){
 
   if(muroAtual > 0){
     jogadorAlvo.muro -= dano;
+    animarCampoDanoMuro();
 
     if(jogadorAlvo.muro < 0){
        let overkill = Math.abs(jogadorAlvo.muro);
        jogadorAlvo.muro = 0;
        jogadorAlvo.castelo -= overkill;
        if(jogadorAlvo.castelo < 0) jogadorAlvo.castelo = 0;
+       animarCampoDanoCasteloMuro();
     }
   }else{
     jogadorAlvo.castelo -= dano;
+    animarCampoDanoCastelo();
   }
   attUI();
 }
@@ -764,11 +782,13 @@ function remover(jogadorAlvo,efeito){
   if(typeof efeito.alvo === 'string'){
     jogadorAlvo[efeito.alvo] -= efeito.quantidade;
     checarNegativo(jogadorAlvo,efeito.alvo);
+    animarCampoRemover(efeito.alvo);
   
   }else if(Array.isArray(efeito.alvo)){
     efeito.alvo.forEach(recurso => {
       jogadorAlvo[recurso] -= efeito.quantidade;
       checarNegativo(jogadorAlvo,recurso);
+      animarCampoRemoverVarios(recurso);
     })
   }
   attUI();
@@ -781,6 +801,8 @@ function gangorra(jogador,jogadorAlvo,efeito){
     jogador[efeito.alvo] += efeito.quantidade[0];
     jogadorAlvo[efeito.alvo] -= efeito.quantidade[1];
     checarNegativo(jogadorAlvo,efeito.alvo);
+    animarCampoRemover(efeito.alvo);
+    animarCampoAdicionar(efeito.alvo);
   
   }else if(Array.isArray(efeito.alvo)){
     efeito.alvo.forEach(recurso =>{
@@ -793,8 +815,13 @@ function gangorra(jogador,jogadorAlvo,efeito){
       }else if(jogadorAlvo[recurso] > 0 && jogadorAlvo[recurso] < 5){
         jogador[recurso] += jogadorAlvo[recurso];
         jogadorAlvo[recurso] = 0;
-      }else{jogadorAlvo[recurso] = 0;
+
+      }else{
+        jogadorAlvo[recurso] = 0;
+
       };
+      animarCampoAdicionar(recurso);
+      animarCampoRemover(recurso);
     });
   }
   attUI();
@@ -814,6 +841,7 @@ function gangorraTudo(jogador,jogadorAlvo,efeito){
       }
     }
   }
+  animarCampoGangorraTudo();
   attUI();
 };
 
@@ -848,7 +876,7 @@ function proximaRodada(){
 
   verificarJogador();
   currentPlayer = currentPlayer === 1 ? 2 : 1;
-  verificaCusto();
+  verificarCusto();
   
   if(currentPlayer === 1){
   habilitarSelecao();
@@ -900,13 +928,19 @@ function botJoga(){
     cartaDescartada.classList.add('animar-carta-bot');
     cartaDescartada.classList.add('descartada');
     setTimeout(()=>{
+      bot['tijolos'] ++;
+      bot['armas'] ++;
+      bot['cristais'] ++;
+      animarCampoAdicionar('tijolos');
+      animarCampoAdicionar('armas');
+      animarCampoAdicionar('cristais');
+      document.getElementById("somdescartar").play();
       attUI();
     },1000)
 
     setTimeout(() => {
       cartaDescartada.classList.remove('animar-carta-bot');
       cartaDescartada.classList.remove('descartada');
-      attUI();
       proximaRodada();
     }, 2500)
     return;
@@ -935,11 +969,13 @@ function botJoga(){
   setTimeout(() => {
     cartaEscolhida.classList.remove('animar-carta-bot');
     novaCarta(imgEscolhida);
-    verificaCusto();
+    verificarCusto();
     imgEscolhida.src = '/assets/img/molde.png';
     imgEscolhida.removeAttribute("onclick");
     proximaRodada();
+    comecarVez();
   }, 2500);
+
 
 }
 
@@ -1016,7 +1052,7 @@ function reiniciarJogo() {
   escolherCarta();
   // Atualiza UI
   attUI();
-  verificaCusto();
+  verificarCusto();
   habilitarSelecao();
 
   document.getElementById("tela-final").classList.add("invisivel");
@@ -1025,74 +1061,191 @@ function reiniciarJogo() {
 
 
 
-//VERIFICAR O RECURSO GASTO
-function verificarRecurso(efeito){
 
-
-    switch (efeito.tipo) {
-      case 'adicionar':
-        animarCampoAdicionar(efeito);
-        break;
-       case 'dano':
-         animarCampoDano()
-         break;
-    
-      //  case 'gangorra':
-      //    document.getElementById("somgangorra").play();
-      //    break;
-  
-      //    case 'gangorratudo':
-      //      document.getElementById("sommaldicao").play();
-      //      break;
-    
-      // case 'remover':
-      //    document.getElementById("somremover").play();
-      //    break;
-     }
-
-}
 
 //ANIMAR O CAMPO DE RECURSO
+
+function animarCampoRecursoPerdido(recurso){
+  if(currentPlayer == 1){
+    document.getElementById(`p1-${recurso}`).classList.add('dark-animado-recurso');
+  setTimeout(()=>{
+    document.getElementById(`p1-${recurso}`).classList.remove('dark-animado-recurso');
+  },1000);
+
+  }else{
+    document.getElementById(`p2-${recurso}`).classList.add('dark-animado-recurso');
+  setTimeout(()=>{
+    document.getElementById(`p2-${recurso}`).classList.remove('dark-animado-recurso');
+  },1000);
+  }
+}
+
+
+
 function animarCampoAdicionar(efeito){
-  const alvoEfeito = efeito.alvo;
 
   if(currentPlayer == 1){
-    document.getElementById(`p1-${alvoEfeito}`).classList.add('brilho-animado');
+    document.getElementById(`p1-${efeito}`).classList.add('brilho-animado');
   setTimeout(()=>{
-    document.getElementById(`p1-${alvoEfeito}`).classList.remove('brilho-animado');
+    document.getElementById(`p1-${efeito}`).classList.remove('brilho-animado');
   },1000);
 
   }else{
-    document.getElementById(`p2-${alvoEfeito}`).classList.add('brilho-animado');
+    document.getElementById(`p2-${efeito}`).classList.add('brilho-animado');
   setTimeout(()=>{
-    document.getElementById(`p2-${alvoEfeito}`).classList.remove('brilho-animado');
+    document.getElementById(`p2-${efeito}`).classList.remove('brilho-animado');
   },1000);
   }
 
 }
 
-function animarCampoDano(efeito,muroAtual){
-  const alvoEfeito = efeito.alvo;
-  
+function animarCampoDanoMuro(){
 
   if(currentPlayer == 1){
-    document.getElementById(`p1-${alvoEfeito}`).classList.add('brilho-animado');
+    document.getElementById(`p2-muro`).classList.add('dark-animado');
   setTimeout(()=>{
-    document.getElementById(`p1-${alvoEfeito}`).classList.remove('brilho-animado');
+    document.getElementById(`p2-muro`).classList.remove('dark-animado');
   },1000);
 
   }else{
-    document.getElementById(`p2-${alvoEfeito}`).classList.add('brilho-animado');
+    document.getElementById(`p1-muro`).classList.add('dark-animado');
   setTimeout(()=>{
-    document.getElementById(`p2-${alvoEfeito}`).classList.remove('brilho-animado');
+    document.getElementById(`p1-muro`).classList.remove('dark-animado');
   },1000);
   }
 
+}
+
+function animarCampoDanoCastelo(){
+  if(currentPlayer == 1){
+    document.getElementById(`p2-castelo`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-castelo`).classList.remove('dark-animado');
+  },1000);
+
+  }else{
+    document.getElementById(`p1-castelo`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-castelo`).classList.remove('dark-animado');
+  },1000);
+  }
 
 }
 
 
+function animarCampoDanoCasteloMuro(){
+  if(currentPlayer == 1){
+    document.getElementById(`p2-castelo`).classList.add('dark-animado');
+    document.getElementById(`p2-muro`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-castelo`).classList.remove('dark-animado');
+    document.getElementById(`p2-muro`).classList.remove('dark-animado');
+  },1000);
+
+  }else{
+    document.getElementById(`p1-castelo`).classList.add('dark-animado');
+    document.getElementById(`p1-muro`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-castelo`).classList.remove('dark-animado');
+    document.getElementById(`p1-muro`).classList.remove('dark-animado');
+  },1000);
+  }
+}
 
 
 
+function animarCampoRemover(efeito){
+  if(currentPlayer == 1){
+    document.getElementById(`p2-${efeito}`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-${efeito}`).classList.remove('dark-animado');
+  },1000);
 
+  }else{
+    document.getElementById(`p1-${efeito}`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-${efeito}`).classList.remove('dark-animado');
+  },1000);
+  }
+}
+
+function animarCampoRemoverVarios(recurso){
+  if(currentPlayer == 1){
+    document.getElementById(`p2-${recurso}`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-${recurso}`).classList.remove('dark-animado');
+  },1000);
+
+  }else{
+    document.getElementById(`p1-${recurso}`).classList.add('dark-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-${recurso}`).classList.remove('dark-animado');
+  },1000);
+  }
+}
+
+
+
+//DEPOIS TENHO QUE OTIMIZAR ESTA FUNÇÃO
+function animarCampoGangorraTudo(){
+  if(currentPlayer == 1){
+    document.getElementById(`p2-tijolos`).classList.add('dark-animado');
+    document.getElementById(`p2-armas`).classList.add('dark-animado');
+    document.getElementById(`p2-cristais`).classList.add('dark-animado');
+    document.getElementById(`p2-construtores`).classList.add('dark-animado');
+    document.getElementById(`p2-soldados`).classList.add('dark-animado');
+    document.getElementById(`p2-magos`).classList.add('dark-animado');
+
+      document.getElementById(`p1-tijolos`).classList.add('brilho-animado');
+      document.getElementById(`p1-armas`).classList.add('brilho-animado');
+      document.getElementById(`p1-cristais`).classList.add('brilho-animado');
+      document.getElementById(`p1-construtores`).classList.add('brilho-animado');
+      document.getElementById(`p1-soldados`).classList.add('brilho-animado');
+      document.getElementById(`p1-magos`).classList.add('brilho-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-tijolos`).classList.remove('dark-animado');
+    document.getElementById(`p2-armas`).classList.remove('dark-animado');
+    document.getElementById(`p2-cristais`).classList.remove('dark-animado');
+    document.getElementById(`p2-construtores`).classList.remove('dark-animado');
+    document.getElementById(`p2-soldados`).classList.remove('dark-animado');
+    document.getElementById(`p2-magos`).classList.remove('dark-animado');
+
+    document.getElementById(`p1-tijolos`).classList.remove('brilho-animado');
+    document.getElementById(`p1-armas`).classList.remove('brilho-animado');
+    document.getElementById(`p1-cristais`).classList.remove('brilho-animado');
+    document.getElementById(`p1-construtores`).classList.remove('brilho-animado');
+    document.getElementById(`p1-soldados`).classList.remove('brilho-animado');
+    document.getElementById(`p1-magos`).classList.remove('brilho-animado');
+  },1000);
+
+  }else{
+    document.getElementById(`p1-tijolos`).classList.add('dark-animado');
+    document.getElementById(`p1-armas`).classList.add('dark-animado');
+    document.getElementById(`p1-cristais`).classList.add('dark-animado');
+    document.getElementById(`p1-construtores`).classList.add('dark-animado');
+    document.getElementById(`p1-soldados`).classList.add('dark-animado');
+    document.getElementById(`p1-magos`).classList.add('dark-animado');
+
+      document.getElementById(`p2-tijolos`).classList.add('brilho-animado');
+      document.getElementById(`p2-armas`).classList.add('brilho-animado');
+      document.getElementById(`p2-cristais`).classList.add('brilho-animado');
+      document.getElementById(`p2-construtores`).classList.add('brilho-animado');
+      document.getElementById(`p2-soldados`).classList.add('brilho-animado');
+      document.getElementById(`p2-magos`).classList.add('brilho-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-tijolos`).classList.remove('dark-animado');
+    document.getElementById(`p1-armas`).classList.remove('dark-animado');
+    document.getElementById(`p1-cristais`).classList.remove('dark-animado');
+    document.getElementById(`p1-construtores`).classList.remove('dark-animado');
+    document.getElementById(`p1-soldados`).classList.remove('dark-animado');
+    document.getElementById(`p1-magos`).classList.remove('dark-animado');
+
+    document.getElementById(`p2-tijolos`).classList.remove('brilho-animado');
+    document.getElementById(`p2-armas`).classList.remove('brilho-animado');
+    document.getElementById(`p2-cristais`).classList.remove('brilho-animado');
+    document.getElementById(`p2-construtores`).classList.remove('brilho-animado');
+    document.getElementById(`p2-soldados`).classList.remove('brilho-animado');
+    document.getElementById(`p2-magos`).classList.remove('brilho-animado');
+  },1000);
+  }
+}

@@ -237,9 +237,20 @@ p{
 
   .txtBox{
     position: absolute;
-    left: 50%;
     top: 50%;
-    font-size: xx-large;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1rem 2rem;
+    background-color: #4b2e1a;
+    color: #d8b28e;
+    font-size: 2.2rem;
+    font-weight: bold;
+    border-radius: 12px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    border: 2px solid #8b5a2b;
+    font-family: 'Georgia', serif;
+    z-index: 999;
+    text-align: center;
   }
 
 
@@ -434,4 +445,25 @@ p{
 
   .dark-animado{
     animation: dark-contorno 1s linear
+  }
+
+  @keyframes dark-contorno-recurso{
+    0% {
+      transform: scale(1);
+      color: #0bca44;
+    }
+    50% {
+      transform: scale(1.1);
+      color: rgba(221, 52, 52, 0.8);
+    }
+    100% {
+      transform: scale(1);
+      color: #0bca44;
+    }
+  }
+
+
+
+  .dark-animado-recurso{
+    animation: dark-contorno-recurso 1s linear
   }
