@@ -15,145 +15,118 @@
   <title>Formiguerra</title>
 </head>
 <body>
-
   <div class="campo">  
-    <div class="player__area p1">
-      <div class="status">
-        <div class="player p1" id="player1">
-          <div class="titulo p1">
-            <h2>Jogador</h2>
-          </div>
-          <div class="player__info jogador" id="p1-status">
-            <p>🏰Castelo: <span id="p1-castelo" class="numero">30</span></p>
-            <div class="castle-bar-wrapper">
-              <div class="castle-bar" id="playerCastleBar"></div>
-            </div>
-            <p>🏯Muro: <span id="p1-muro" class="numero">10</span></p>
-            <div class="castle-bar-wrapper">
-              <div class="castle-bar" id="playerWallBar"></div>
-            </div>
-          </div>
-
-      <div class="info">
-        <div class="player__info">
-          <h3>Recursos e</h3>
-          <h3>Fornecedores</h3>
-          <br>
-          <p>🧱Tijolos</p>
-          <p span id="p1-tijolos" class="numero">5</p>
-          <p>🛠️Construtores</p>
-          <p span id="p1-construtores" class="numero">2</p>
-        </div>
-        <div class="player__info">
-            <p>⚔️Armas</p>
-            <p span id="p1-armas" class="numero">5</p>
-            <p>🛡️Soldados</p>
-            <p span id="p1-soldados" class="numero">2</p>
-        </div>
-        <div class="player__info">
-            <p>💎Cristais</p>
-            <p span id="p1-cristais" class="numero">5/p>
-            <p>🧙Magos</p>
-            <p span id="p1-magos" class="numero">2</p>
-        </div>
-        </div>  
-      </div>
-      </div>
-    </div>
-
-    <div class="campo__jogo">
-      <div class="campo__cartas bot">
-        <div class="campo__jogo__jogador" id="p2-cartas">
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-          <div class="campo__jogo__jogador__carta naoclicavel bot">
-          </div>
-        </div>
-      </div>
-
-      <div id="tela-final" class="tela-final invisivel">
-        <h1 id="mensagem-final"></h1>
-        <button class="button" id="botao" onclick="reiniciarJogo()">Reiniciar</button>
-      </div>
-
-      <div class="campo__cartas jogador">
-        <div class="campo__jogo__jogador p1" id="p1-cartas">
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-          <div class="campo__jogo__jogador__carta selecionaveis p1">
-          </div>
-        </div>
-      </div> 
-    </div>
-
 
 
     <div class="player__area p2">
-      <div class="status p2">
+      <div class="status">
         <div class="player p2" id="player2">
-          <div class="titulo p2">
-            <h1>Bot</h1>
-          </div>
-          <div class="player__info p2" id="p2-status">
+          <div class="titulo p2"><h1>Bot</h1></div>
+          <div class="celula" style="border: 1px solid rgba(138, 137, 137, 0.574);">
+          <div class="player__info vida p2" id="p2-status">
             <p>🏰Castelo: <span id="p2-castelo" class="numero">30</span></p>
-            <div class="castle-bar-wrapper">
-              <div class="castle-bar" id="enemyCastleBar"></div>
-            </div>
+            <div class="castle-bar-wrapper"><div class="castle-bar" id="enemyCastleBar"></div></div>
+          </div>
+          </div>
+          <div class="celula" style="border: 1px solid rgba(138, 137, 137, 0.574);">
+          <div class="player__info muro p2">
             <p>🏯Muro: <span id="p2-muro" class="numero">10</span></p>
-            <div class="castle-bar-wrapper">
-              <div class="castle-bar" id="enemyWallBar"></div>
-            </div>
+            <div class="castle-bar-wrapper"><div class="castle-bar" id="enemyWallBar"></div></div>
           </div>
-
-
-        <div class="info p2">
-          <div class="player__info p2">
-            <h3>Recursos e</h3>
-            <h3>Fornecedores</h3>
+          </div>
+          <div class="info planilha">
+          <div class="celula">
+            <p style="padding: 0 1rem 0 1rem;" >Recursos:</p>
             <br>
-            <p>🧱Tijolos</p>
-            <p span id="p2-tijolos" class="numero">5</p>
-            <p>🛠️Construtores</p>
-            <p span id="p2-construtores">2</p>
+            <p style="padding: 0 1rem 0 1rem;" >Fornecedores:</p>
           </div>
-          <div class="player__info p2">
-            <p>⚔️Armas</p>
-            <p span id="p2-armas" class="numero">5</p>
-            <p>🛡️Soldados</p>
-            <p span id="p2-soldados" class="numero">2</p>
-          </div>
-          <div class="player__info p2">
-            <p>💎Cristais</p>
-            <p span id="p2-cristais" class="numero">5</p>
-            <p>🧙Magos</p>
-            <p span id="p2-magos" class="numero">2</p>
-          </div>
+            <div class="celula">
+              <p>🧱 Tijolos</p><span id="p2-tijolos" class="numero">5</span>
+              <p>🛠️ Construtores</p><span id="p2-construtores" class="numero">2</span>
+            </div>
+            <div class="celula">
+              <p>⚔️ Armas</p><span id="p2-armas" class="numero">5</span>
+              <p>🛡️ Soldados</p><span id="p2-soldados" class="numero">2</span>
+            </div>
+            <div class="celula">
+              <p>💎 Cristais</p><span id="p2-cristais" class="numero">5</span>
+              <p>🧙 Magos</p><span id="p2-magos" class="numero">2</span>
+            </div>
+         </div>
         </div>
-      </div>  
+      </div>
+    </div>
+  
+    <div class="campo__jogo">
+      <div class="campo__cartas bot">
+        <div class="campo__jogo__jogador" id="p2-cartas">
+          <!-- 7 cartas do bot -->
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+          <div class="campo__jogo__jogador__carta naoclicavel bot"></div>
+        </div>
+      </div>
+  
+      <div class="campo__cartas jogador">
+        <div class="campo__jogo__jogador p1" id="p1-cartas">
+          <!-- 7 cartas do jogador -->
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+          <div class="campo__jogo__jogador__carta selecionaveis p1"></div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="player__area p1">
+      <div class="status">
+        <div class="player p1" id="player1">
+          <div class="titulo p1"><h1>Jogador</h1></div>
+          <div class="celula" style="border: 1px solid rgba(138, 137, 137, 0.574);">
+          <div class="player__info vida jogador" id="p1-status">
+            <p>🏰Castelo: <span id="p1-castelo" class="numero">30</span></p>
+            <div class="castle-bar-wrapper"><div class="castle-bar" id="playerCastleBar"></div></div>
+          </div>
+          </div>
+          <div class="celula" style="border: 1px solid rgba(138, 137, 137, 0.574);">
+          <div class="player__info muro jogador">
+            <p>🏯Muro: <span id="p1-muro" class="numero">10</span></p>
+            <div class="castle-bar-wrapper"><div class="castle-bar" id="playerWallBar"></div></div>
+          </div>
+          </div>
+          <div class="info planilha">
+          <div class="celula">
+            <p style="padding: 0 1rem 0 1rem;">Recursos:</p>
+            <br>
+            <p style="padding: 0 1rem 0 1rem;">Fornecedores:</p>
+          </div>
+            <div class="celula">
+              <p>🧱 Tijolos</p><span id="p1-tijolos" class="numero">5</span>
+              <p>🛠️ Construtores</p><span id="p1-construtores" class="numero">2</span>
+            </div>
+            <div class="celula">
+              <p>⚔️ Armas</p><span id="p1-armas" class="numero">5</span>
+              <p>🛡️ Soldados</p><span id="p1-soldados" class="numero">2</span>
+            </div>
+            <div class="celula">
+              <p>💎 Cristais</p><span id="p1-cristais" class="numero">5</span>
+              <p>🧙 Magos</p><span id="p1-magos" class="numero">2</span>
+            </div>
+         </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-  <script src="/assets/js/app.js"></script>
+  
 </body>
+<script src="/assets/js/app.js"></script>
 </html>

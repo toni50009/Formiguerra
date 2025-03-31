@@ -412,9 +412,9 @@ const players = {
   1: {
     castelo: 30,
     muro: 10,
-    tijolos: 5,
-    armas: 5,
-    cristais: 5,
+    tijolos: 30,
+    armas: 30,
+    cristais: 30,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -422,9 +422,9 @@ const players = {
   2: {
     castelo: 30,
     muro: 10,
-    tijolos: 5,
-    armas: 5,
-    cristais: 5,
+    tijolos: 0,
+    armas: 0,
+    cristais: 0,
     construtores: 2,
     soldados: 2,
     magos: 2
@@ -510,7 +510,6 @@ function attUI(){
     document.getElementById(`p${i}-cristais`).textContent = players[i].cristais;
     document.getElementById(`p${i}-magos`).textContent = players[i].magos;
   }
-  verificaCusto();
 
 
 let percentPlayer = (players[1].castelo / 100) * 100;
@@ -579,10 +578,29 @@ function verificaCusto(){
 //JOGO COMEÇA AQUI
 escolherCarta();
 attUI();
+verificaCusto();
+comecarVez();
 
 
 
-// EFEITO DA CARTA E RODAR NOVA CARTA
+
+//COMEÇAR A VEZ DO PLAYER E DO BOT
+function comecarVez(){
+  const textBox = document.createElement('div');
+  const pai = document.querySelector('.campo__jogo');
+  
+  textBox.className = 'txtBox';
+  textBox.textContent = 'Sua Vez';
+  pai.appendChild(textBox);
+
+  if(currentPlayer === 1){
+
+  }
+}
+
+
+
+//EFEITO DA CARTA E RODAR NOVA CARTA
 function jogarCarta(img){
 
   const nomeCarta = img.dataset.nome;
@@ -609,6 +627,7 @@ function jogarCarta(img){
 
       p[recurso] += 1;
 
+      divCarta.classList.remove('descartavel');
       divCarta.classList.add('animar-carta');
       divCarta.classList.add('descartada');
       divMensagem.remove();
@@ -618,12 +637,11 @@ function jogarCarta(img){
       }, 1000)
 
       setTimeout(() => {
-        novaCarta(img);
         divCarta.classList.remove('descartada');
         divCarta.classList.remove('animar-carta');
-        divCarta.classList.remove('descartavel');
+        novaCarta(img);
+        verificaCusto();
         proximaRodada();
-        attUI();
       }, 2500);
 
     });
@@ -641,18 +659,16 @@ function jogarCarta(img){
 
   setTimeout(() =>{
     tocarSom(img);
+    aplicarEfeito(nomeCarta);
     attUI();
   },1000);
 
   setTimeout(() =>{
-    novaCarta(img);
     divCarta.classList.remove('animar-carta');
-    attUI();
+    novaCarta(img);
+    verificaCusto();
     proximaRodada();
 },2500);  
-aplicarEfeito(nomeCarta);
-
-
 }
 }
 
@@ -673,14 +689,14 @@ function aplicarEfeito(nomeCarta){
   const recurso = carta.custo.recurso;
   const qtdRecurso = carta.custo.quantidade;
 
+
   checarDados(jogador,efeito,jogadorAlvo);
 
-
-jogador[recurso] -= qtdRecurso;
-checarNegativo(jogador,recurso);
-
-attUI();
-checarCondicaoVitoria();
+  jogador[recurso] -= qtdRecurso;
+  checarNegativo(jogador,recurso);
+  verificarRecurso(efeito);
+  attUI();
+  checarCondicaoVitoria();
 }
 
 
@@ -851,7 +867,7 @@ function proximaRodada(){
 //FAZER O BOT JOGAR
 function botJoga(){
   const jogaveis = [];
-
+  desabilitarSelecao();
   
   const maoBot = document.querySelectorAll('.campo__jogo__jogador__carta.bot');
   const bot = players[currentPlayer];
@@ -859,10 +875,14 @@ function botJoga(){
 
 
   //Desestruturação 
-    Array.from(maoBot).filter(divCarta => {
+    Array.from(maoBot).forEach(divCarta => {
     const img = divCarta.querySelector('img');
+    if(!img) return;
+
     const nomeCarta = img.dataset.nome;
     const carta = cartas.find(c => c.nome === nomeCarta);
+    if(!carta) return;
+
     const custo = carta.custo;
     const recurso = custo.recurso;
     const quantidade = custo.quantidade;
@@ -879,16 +899,20 @@ function botJoga(){
     document.getElementById('somflip').play();
     cartaDescartada.classList.add('animar-carta-bot');
     cartaDescartada.classList.add('descartada');
-    desabilitarSelecao();
+    setTimeout(()=>{
+      attUI();
+    },1000)
+
     setTimeout(() => {
       cartaDescartada.classList.remove('animar-carta-bot');
       cartaDescartada.classList.remove('descartada');
       attUI();
       proximaRodada();
-      return;
     }, 2500)
+    return;
   }
 
+  
     //Escolhe aleatoriamente uma carta que o BOT tem recurso para jogar
     const cartaEscolhida = jogaveis[Math.floor(Math.random() * jogaveis.length)];
     const imgEscolhida = cartaEscolhida.querySelector('img');
@@ -899,25 +923,24 @@ function botJoga(){
   //Inverte a animação e executa
   document.getElementById('somflip').play();
   cartaEscolhida.classList.add('animar-carta-bot');
-  desabilitarSelecao();
 
 
   setTimeout(() => {
+    currentPlayer = 2;    
     tocarSom(imgEscolhida);
+    aplicarEfeito(imgEscolhida.dataset.nome);
+    attUI();
   }, 1000);
 
   setTimeout(() => {
-    currentPlayer = 2;
-    aplicarEfeito(imgEscolhida.dataset.nome);
+    cartaEscolhida.classList.remove('animar-carta-bot');
     novaCarta(imgEscolhida);
     verificaCusto();
     imgEscolhida.src = '/assets/img/molde.png';
     imgEscolhida.removeAttribute("onclick");
-    cartaEscolhida.classList.remove('animar-carta-bot');
     proximaRodada();
   }, 2500);
 
-  attUI();
 }
 
 
@@ -999,4 +1022,77 @@ function reiniciarJogo() {
   document.getElementById("tela-final").classList.add("invisivel");
   document.querySelector('.campo__jogo').classList.remove('naoclicavel');
 }
+
+
+
+//VERIFICAR O RECURSO GASTO
+function verificarRecurso(efeito){
+
+
+    switch (efeito.tipo) {
+      case 'adicionar':
+        animarCampoAdicionar(efeito);
+        break;
+       case 'dano':
+         animarCampoDano()
+         break;
+    
+      //  case 'gangorra':
+      //    document.getElementById("somgangorra").play();
+      //    break;
+  
+      //    case 'gangorratudo':
+      //      document.getElementById("sommaldicao").play();
+      //      break;
+    
+      // case 'remover':
+      //    document.getElementById("somremover").play();
+      //    break;
+     }
+
+}
+
+//ANIMAR O CAMPO DE RECURSO
+function animarCampoAdicionar(efeito){
+  const alvoEfeito = efeito.alvo;
+
+  if(currentPlayer == 1){
+    document.getElementById(`p1-${alvoEfeito}`).classList.add('brilho-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-${alvoEfeito}`).classList.remove('brilho-animado');
+  },1000);
+
+  }else{
+    document.getElementById(`p2-${alvoEfeito}`).classList.add('brilho-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-${alvoEfeito}`).classList.remove('brilho-animado');
+  },1000);
+  }
+
+}
+
+function animarCampoDano(efeito,muroAtual){
+  const alvoEfeito = efeito.alvo;
+  
+
+  if(currentPlayer == 1){
+    document.getElementById(`p1-${alvoEfeito}`).classList.add('brilho-animado');
+  setTimeout(()=>{
+    document.getElementById(`p1-${alvoEfeito}`).classList.remove('brilho-animado');
+  },1000);
+
+  }else{
+    document.getElementById(`p2-${alvoEfeito}`).classList.add('brilho-animado');
+  setTimeout(()=>{
+    document.getElementById(`p2-${alvoEfeito}`).classList.remove('brilho-animado');
+  },1000);
+  }
+
+
+}
+
+
+
+
+
 
