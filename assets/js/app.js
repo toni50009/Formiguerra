@@ -18,7 +18,7 @@ const cartas = [
     efeito:{
       tipo: 'dano',
       alvo: 'castelo',
-      quantidade: 3
+      quantidade: 2
     },
     custo:{
       recurso: 'armas',
