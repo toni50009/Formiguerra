@@ -342,7 +342,7 @@ const cartas = [
     efeito:{
       tipo: 'adicionar',
       alvo: 'castelo',
-      quantidade: 5
+      quantidade: 2
     },
     custo: {
       recurso: 'tijolos',
@@ -625,8 +625,8 @@ function jogarCarta(img){
     divMensagem.classList.add('mensagem');
     divMensagem.innerHTML = `
      Deseja descartar esta cartar e receber +1 do recurso necessário? (${recurso})
-    <button id="sim">Sim</button>
-    <button id="nao">Não</button>
+    <button id="sim" class="button">Sim</button>
+    <button id="nao" class="button">Não</button>
     `; 
     classeCampo.appendChild(divMensagem);
     desabilitarSelecao();
@@ -1249,4 +1249,32 @@ function animarCampoGangorraTudo(){
     document.getElementById(`p2-magos`).classList.remove('brilho-animado');
   },1000);
   }
+}
+
+
+function telaTutorial(){
+ const classePai =  document.querySelector('.campo');
+ const telaTutorial = document.createElement('div');
+ telaTutorial.className = ('campo-tutorial');
+ telaTutorial.innerHTML += `
+       <h1>Bem-vindo ao Formiguerra <br><br>Formiguerra é um jogo de cartas onde o objetivo é destruir o castelo inimigo,
+        ou fazer o seu castelo chegar a 100 de vida. O BOT poderá ganhar também pelas mesmas condições. <br><br>
+        > Para jogar uma carta, basta clicar nela. Todas as cartas têm um custo de algum Recurso, e são infinitas, então
+        pode usar à vontade.<br>
+        > Se você não tiver o Recurso para jogar a carta,você pode DESCARTAR a carta clicando nela, e receberá 1 de Recurso do custo desta carta.
+        O BOT também pode Descartar, mas ele recebe +1 de todos os Recursos.<br>
+        > A cada turno que se inicia é somado aos Recursos do jogador que está na vez os respectivos Fornecedores: <br>
+        🧱 Tijolos -> É somado por: 🛠️Construtores<br>
+        ⚔️Armas -> É somado por: 🛡️Soldados<br>
+        💎Cristais -> É somado por: 🧙Magos<br>
+        <h2><button class="button" onclick="sairTutorial()">Clique para Voltar</button></h2>
+      </h1>
+ ` 
+classePai.appendChild(telaTutorial);
+
+}
+
+function sairTutorial(){
+  const telaTutorial = document.querySelector('.campo-tutorial');
+  telaTutorial.remove();
 }
