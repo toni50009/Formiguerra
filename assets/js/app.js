@@ -348,7 +348,7 @@ const cartas = [
       recurso: 'tijolos',
       quantidade: 1
   },
-  imagem: '/assets/img/primeiropiso/primeiropiso.png',
+  imagem: '/assets/img/ponteprotegida/ponteprotegida.png',
   },
   {
     nome: 'surpreender',
