@@ -410,7 +410,7 @@ const cartas = [
 // Arrays dos players:
 const players = {
   1: {
-    castelo: 30,
+    castelo: 99,
     muro: 10,
     tijolos: 5,
     armas: 5,
@@ -572,7 +572,16 @@ function verificarCusto(){
 }
 
 
+//DESABILITAR BOTAO TUTORIAL DURANTE A TROCA DE VEZ
+function desabilitarBotao(){
+  const campoBotao = document.getElementById('buttonTutorial');
+  campoBotao.classList.add('naoclicavelBotao');
+}
 
+function habilitarBotao(){
+  const campoBotao = document.getElementById('buttonTutorial');
+  campoBotao.classList.remove('naoclicavelBotao');
+}
 
 
 //JOGO COMEÇA AQUI
@@ -580,6 +589,9 @@ escolherCarta();
 attUI();
 verificarCusto();
 comecarVez();
+habilitarBotao();
+
+
 
 
 
@@ -632,6 +644,7 @@ function jogarCarta(img){
     desabilitarSelecao();
 
     document.getElementById('sim').addEventListener('click', () =>{
+      desabilitarBotao();
       const p = players[currentPlayer];
       document.getElementById('somflip').play();
 
@@ -664,7 +677,7 @@ function jogarCarta(img){
       return;
     })
   }else{
-
+  desabilitarBotao();
   desabilitarSelecao();
   document.getElementById('somflip').play();
   divCarta.classList.add('animar-carta');
@@ -680,6 +693,7 @@ function jogarCarta(img){
     novaCarta(img);
     verificarCusto();
     proximaRodada();
+    desabilitarBotao();
 },2000);  
 }
 }
@@ -808,16 +822,12 @@ function gangorra(jogador,jogadorAlvo,efeito){
       if(jogadorAlvo[recurso] >= 5){
         jogador[recurso] += efeito.quantidade;
         jogadorAlvo[recurso] -= efeito.quantidade;
-        if (['construtores', 'soldados', 'magos'].includes(recurso) && jogadorAlvo[recurso] < 1) {
-          jogadorAlvo[recurso] = 1;
-        }
       }else if(jogadorAlvo[recurso] > 0 && jogadorAlvo[recurso] < 5){
         jogador[recurso] += jogadorAlvo[recurso];
         jogadorAlvo[recurso] = 0;
 
       }else{
         jogadorAlvo[recurso] = 0;
-
       };
       animarCampoAdicionar(recurso);
       animarCampoRemover(recurso);
@@ -828,21 +838,29 @@ function gangorra(jogador,jogadorAlvo,efeito){
 
 
 function gangorraTudo(jogador,jogadorAlvo,efeito){
-  for (let i = 0; i < efeito.alvo.length; i++) {
-    const chave = efeito.alvo[i];
-    jogador[chave] += efeito.quantidade;
-    jogadorAlvo[chave] -= efeito.quantidade;
-    if (jogadorAlvo[chave] < 0) {
-      if (['construtores', 'soldados', 'magos'].includes(chave)) {
-        jogadorAlvo[chave] = 1;
-      } else {
-        jogadorAlvo[chave] = 0;
-      }
-    }
-  }
+
+  efeito.alvo.forEach(recurso =>{
+    if(jogadorAlvo[recurso] === 0 && recurso === 'tijolos' || 
+      jogadorAlvo[recurso] === 0 && recurso === 'armas' ||
+      jogadorAlvo[recurso] === 0 && recurso === 'cristais'){
+      jogador[recurso] ++;
+      jogadorAlvo[recurso] = 0;
+    }else if(jogadorAlvo[recurso] === 1 && recurso === 'construtores' || 
+      jogadorAlvo[recurso] === 1 && recurso === 'soldados' ||
+      jogadorAlvo[recurso] === 1 && recurso === 'magos'
+    ){
+      jogador[recurso] ++;
+      jogadorAlvo[recurso] = 1;
+
+    }else{
+      jogador[recurso] ++;
+      jogadorAlvo[recurso] --;
+    };
   animarCampoGangorraTudo();
   attUI();
-};
+});
+
+}
 
 
 
@@ -879,6 +897,7 @@ function proximaRodada(){
   
   if(currentPlayer === 1){
   habilitarSelecao();
+  habilitarBotao();
   }
   if(currentPlayer === 2){
     botJoga();
@@ -1024,6 +1043,7 @@ function checarCondicaoVitoria(){
 function reiniciarJogo() {
   document.querySelector('.campo__cartas.jogador').classList.remove('naoclicavel');
   document.querySelector('.tela-final').remove();
+  document.querySelector('.txtBox').remove();
 
   players[1] = {
     castelo: 30,
@@ -1257,18 +1277,21 @@ function telaTutorial(){
  const telaTutorial = document.createElement('div');
  telaTutorial.className = ('campo-tutorial');
  telaTutorial.innerHTML += `
-       <h1>Bem-vindo ao Formiguerra <br><br>Formiguerra é um jogo de cartas onde o objetivo é destruir o castelo inimigo,
+       <h2>Bem-vindo ao Formiguerra <br><br>Formiguerra é um jogo de cartas onde o objetivo é destruir o castelo inimigo,
         ou fazer o seu castelo chegar a 100 de vida. O BOT poderá ganhar também pelas mesmas condições. <br><br>
         > Para jogar uma carta, basta clicar nela. Todas as cartas têm um custo de algum Recurso, e são infinitas, então
         pode usar à vontade.<br>
-        > Se você não tiver o Recurso para jogar a carta,você pode DESCARTAR a carta clicando nela, e receberá 1 de Recurso do custo desta carta.
-        O BOT também pode Descartar, mas ele recebe +1 de todos os Recursos.<br>
+        > Se você não tiver o Recurso para jogar a carta, ela ficará indicada e 
+        você pode DESCARTAR a carta clicando nela, se o fizer receberá 1 de Recurso do custo desta carta.
+        O BOT também pode Descartar, mas ele recebe +1 de todos os Recursos se o fizer.<br>
         > A cada turno que se inicia é somado aos Recursos do jogador que está na vez os respectivos Fornecedores: <br>
         🧱 Tijolos -> É somado por: 🛠️Construtores<br>
         ⚔️Armas -> É somado por: 🛡️Soldados<br>
         💎Cristais -> É somado por: 🧙Magos<br>
-        <h2><button class="button" onclick="sairTutorial()">Clique para Voltar</button></h2>
-      </h1>
+        > Dica: Procure ter uma boa economia de Fornecedores, para garantir uma grande quantidade de recursos a cada rodada, 
+        podendo assim jogar as cartas mais fortes e vencer o jogo! Utilize de seu Muro para proteger o Castelo. 
+        <p><button class="button" onclick="sairTutorial()">Clique para Voltar</button></p>
+      </h2>
  ` 
 classePai.appendChild(telaTutorial);
 
