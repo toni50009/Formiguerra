@@ -654,7 +654,7 @@ function jogarCarta(img){
         novaCarta(img);
         verificarCusto();
         proximaRodada();
-      }, 2500);
+      }, 2000);
 
     });
 
@@ -680,7 +680,7 @@ function jogarCarta(img){
     novaCarta(img);
     verificarCusto();
     proximaRodada();
-},2500);  
+},2000);  
 }
 }
 
@@ -710,7 +710,6 @@ function aplicarEfeito(nomeCarta){
   }
   checarNegativo(jogador,recurso);
   attUI();
-  checarCondicaoVitoria();
 }
 
 
@@ -942,7 +941,7 @@ function botJoga(){
       cartaDescartada.classList.remove('animar-carta-bot');
       cartaDescartada.classList.remove('descartada');
       proximaRodada();
-    }, 2500)
+    }, 2000)
     return;
   }
 
@@ -974,7 +973,7 @@ function botJoga(){
     imgEscolhida.removeAttribute("onclick");
     proximaRodada();
     comecarVez();
-  }, 2500);
+  }, 2000);
 
 
 }
@@ -984,12 +983,26 @@ function botJoga(){
 //CONDICOES DE VITORIA E DERROTA
 
 function vencer(){
-  mostrarMensagemFinal('Você venceu!');
+  habilitarSelecao();
+  const tela = document.createElement('div');
+  const pai = document.querySelector('.campo');
+  tela.className = ('tela-final');
+  tela.innerHTML = `Você venceu! Clique no botão para jogar novamente.
+    <button class="button" onclick="reiniciarJogo()">Recomeçar</button> `;
+  pai.appendChild(tela);
+  document.querySelector('.campo__cartas.jogador').classList.add('naoclicavel');
 }
 
 
 function perder(){
-mostrarMensagemFinal('Você perdeu!');
+  habilitarSelecao();
+  const tela = document.createElement('div');
+  const pai = document.querySelector('.campo');
+  tela.className = ('tela-final');
+  tela.innerHTML = `Você perdeu! Clique no botão para jogar novamente.
+    <button class="button" onclick="reiniciarJogo()">Recomeçar</button> `;
+  pai.appendChild(tela);
+  document.querySelector('.campo__cartas.jogador').classList.add('naoclicavel');
 }
 
 
@@ -1006,20 +1019,11 @@ function checarCondicaoVitoria(){
 }
 
 
-function mostrarMensagemFinal(texto) {
-  habilitarSelecao();
-  const tela = document.getElementById("tela-final");
-  const msg = document.getElementById("mensagem-final");
-
-  msg.textContent = texto;
-  tela.classList.remove("invisivel");
-  document.querySelector('.campo__cartas.jogador').classList.add('naoclicavel');
-}
-
 
 //REINICIAR
 function reiniciarJogo() {
   document.querySelector('.campo__cartas.jogador').classList.remove('naoclicavel');
+  document.querySelector('.tela-final').remove();
 
   players[1] = {
     castelo: 30,
@@ -1050,13 +1054,10 @@ function reiniciarJogo() {
 
   currentPlayer = 1;
   escolherCarta();
-  // Atualiza UI
   attUI();
   verificarCusto();
   habilitarSelecao();
-
-  document.getElementById("tela-final").classList.add("invisivel");
-  document.querySelector('.campo__jogo').classList.remove('naoclicavel');
+  comecarVez();
 }
 
 
