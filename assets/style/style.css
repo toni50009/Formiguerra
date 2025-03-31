@@ -1,3 +1,7 @@
+*{
+  box-sizing: border-box;  
+}
+
 body{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: #f4f4dc;
@@ -9,12 +13,13 @@ body{
 
 .textoIniciar{
   display: flex;
-  text-align: center;
   justify-content: center;
-  width: auto;
-  color: #ccc;
+  align-items: center;
+  margin: 2rem auto; 
   text-decoration: none;
   font-size: xx-large;
+  width: fit-content;
+  color: #ccc;
 }
 
 .textoIniciar:hover{
@@ -150,11 +155,13 @@ p{
 }
 
   .campo__jogo.inicio{
-    height: 100vh;
-    width: 100vw;
+    height: 100%;
+    min-height: 100vh;
+    width: 100%;
     line-height: 2rem;
     font-size: 0.8rem;
-    padding: 0;
+    padding: 1rem;
+    justify-content:left;
     background-color: #333;
   }
 
@@ -164,7 +171,7 @@ p{
     width: 100vw;
     line-height: 2rem;
     font-size: 0.8rem;
-    padding: 0;
+    padding: 1rem;
     background-color: #333;
   }
 
@@ -234,6 +241,10 @@ p{
 .titulo{
   align-self: center;
   padding: 1rem;
+}
+
+.titulo-inicio{
+  text-align: center;
 }
 
   .carta{
