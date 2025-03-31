@@ -960,6 +960,7 @@ function botJoga(){
       cartaDescartada.classList.remove('animar-carta-bot');
       cartaDescartada.classList.remove('descartada');
       proximaRodada();
+      comecarVez();
     }, 2000)
     return;
   }
