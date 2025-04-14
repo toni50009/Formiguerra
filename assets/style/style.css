@@ -269,7 +269,7 @@ p{
     box-shadow: 0 0 12px rgba(0,0,0,0.4);
     border: 2px solid #8b5a2b;
     font-family: 'Georgia', serif;
-    z-index: 999;
+    z-index: 2;
     text-align: center;
   }
 
