@@ -18,7 +18,7 @@ const cartas = [
     efeito:{
       tipo: 'dano',
       alvo: 'castelo',
-      quantidade: 3
+      quantidade: 2
     },
     custo:{
       recurso: 'armas',
@@ -410,7 +410,7 @@ const cartas = [
 // Arrays dos players:
 const players = {
   1: {
-    castelo: 99,
+    castelo: 30,
     muro: 10,
     tijolos: 5,
     armas: 5,
@@ -960,6 +960,7 @@ function botJoga(){
       cartaDescartada.classList.remove('animar-carta-bot');
       cartaDescartada.classList.remove('descartada');
       proximaRodada();
+      comecarVez();
     }, 2000)
     return;
   }
@@ -1043,7 +1044,6 @@ function checarCondicaoVitoria(){
 function reiniciarJogo() {
   document.querySelector('.campo__cartas.jogador').classList.remove('naoclicavel');
   document.querySelector('.tela-final').remove();
-  document.querySelector('.txtBox').remove();
 
   players[1] = {
     castelo: 30,
@@ -1078,6 +1078,7 @@ function reiniciarJogo() {
   verificarCusto();
   habilitarSelecao();
   comecarVez();
+  habilitarBotao();
 }
 
 
@@ -1277,12 +1278,16 @@ function telaTutorial(){
  const telaTutorial = document.createElement('div');
  telaTutorial.className = ('campo-tutorial');
  telaTutorial.innerHTML += `
-       <h2>Bem-vindo ao Formiguerra <br><br>Formiguerra é um jogo de cartas onde o objetivo é destruir o castelo inimigo,
+         <h2 class="titulo-inicio">Bem-vindo ao Formiguerra</h2> 
+      <h2>Formiguerra é um jogo de cartas onde o objetivo é destruir o castelo inimigo,
         ou fazer o seu castelo chegar a 100 de vida. O BOT poderá ganhar também pelas mesmas condições. <br><br>
-        > Para jogar uma carta, basta clicar nela. Todas as cartas têm um custo de algum Recurso, e são infinitas, então
-        pode usar à vontade.<br>
+        Para jogar uma carta, basta clicar nela. Todas as cartas têm um custo de algum Recurso  e são infinitas, então
+        pode usar à vontade. Os recursos das cartas são: <br>
+        🧱 Tijolos<br>
+        ⚔️Armas<br>
+        💎Cristais<br>
         > Se você não tiver o Recurso para jogar a carta, ela ficará indicada e 
-        você pode DESCARTAR a carta clicando nela, se o fizer receberá 1 de Recurso do custo desta carta.
+        você pode DESCARTAR a carta clicando nela, e receberá 1 de Recurso do custo desta carta.
         O BOT também pode Descartar, mas ele recebe +1 de todos os Recursos se o fizer.<br>
         > A cada turno que se inicia é somado aos Recursos do jogador que está na vez os respectivos Fornecedores: <br>
         🧱 Tijolos -> É somado por: 🛠️Construtores<br>
@@ -1294,7 +1299,6 @@ function telaTutorial(){
       </h2>
  ` 
 classePai.appendChild(telaTutorial);
-
 }
 
 function sairTutorial(){
